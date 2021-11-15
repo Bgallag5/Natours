@@ -44,3 +44,9 @@ exports.auth = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+// turn off validators (used in development for ease of testing)
+await user.save({validateBeforeSave: false})
+
+//USE SAVE, NOT UPDATE, FOR PATCHING USER PASSWORDS
+// SAVE AND CREATE are new complete instances of our model; UPDATE only replaces certain info
