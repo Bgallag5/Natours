@@ -28,6 +28,10 @@ const sendErrorDev = (err, res) => {
   });
 };
 
+const handleJWTerror = (error) => new AppError('Invalid Token, Auth Denied', 401);
+
+const handleJWTExpiredError = (error) => new AppError('Invalid Token, Token Expired', 401)
+
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
@@ -62,8 +66,10 @@ module.exports = (err, req, res, next) => {
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    if (error.name === 'TokenExpiredError') error = handleJWTExpiredError(error)
     if (error.name === 'ValidationError')
       error = handleValidationErrorDB(error);
+    if (error.name === 'JsonWebTokenError') error = handleJWTerror(error)  
 
     sendErrorProd(error, res);
   }
