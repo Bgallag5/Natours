@@ -50,3 +50,11 @@ await user.save({validateBeforeSave: false})
 
 //USE SAVE, NOT UPDATE, FOR PATCHING USER PASSWORDS
 // SAVE AND CREATE are new complete instances of our model; UPDATE only replaces certain info
+
+
+// NoSQL QUERY INJECTIONS
+// this request can log into accounts without knowing their emails by using a query as the email string and guessing the password
+// {
+// 	"email": {"$gt": ""},
+// 	"password": "password"
+// }

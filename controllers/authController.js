@@ -15,11 +15,23 @@ const signToken = (id) => {
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+  //when in production set 'secure' cookie header to true
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  //send cookie in response to be stored in broswer (in milliseconds)
+  res.cookie('jwt', token, cookieOptions);
+  //Remove password from response
+  user.password = undefined;
   res.status(statusCode).json({
     status: 'success',
     token,
     data: {
-      user
+      user,
     },
   });
 };
@@ -178,7 +190,9 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   if (!user) return next(new AppError('No User found with this email', 404));
   //2 CHECK PASSWORD IS CORRECT
   // check if currentPassword matches password in DB
-  const correctPassword = await user.isCorrectPassword(req.body.currentPassword);
+  const correctPassword = await user.isCorrectPassword(
+    req.body.currentPassword
+  );
   // if passwords do not match throw error
   if (!correctPassword) return next(new AppError('Incorrect password', 401));
 
