@@ -19,7 +19,7 @@ mongoose
 //READ JSON FILE
 //JSON.parse converts to JSON
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
+  fs.readFileSync(`${__dirname}/tours.json`, 'utf-8')
 );
 
 //COMMAND LINE DELETE/IMPORT data to our DB

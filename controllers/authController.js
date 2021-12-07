@@ -6,6 +6,7 @@ const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
 const crypto = require('crypto');
 
+//create a sign token
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWTSECRET, {
     expiresIn: process.env.JWTEXPIRES,

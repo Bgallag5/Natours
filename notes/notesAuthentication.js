@@ -1,5 +1,7 @@
 //AUTHENTICATION
 
+const catchAsync = require("../utils/catchAsync");
+
 //JSON Web Tokens
 
 //payload - the data you want stored in your web token
@@ -7,7 +9,6 @@
 const token = jwt.sign({ id: newUser._id }, process.env.JWTSECRET, {
   expiresIn: process.env.JWTEXPIRES,
 });
-
 
 
 //AUTH MIDDLEWARE - check tokens 

@@ -1,8 +1,13 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
-// const {getAllTours, getOneTour, createTour, updateTour, deleteTour} = require('./../controllers/tourController');  //could also destructure and then just call functions instead of tourController.
+// const reviewController = require('../controllers/reviewController');
+const reviewRouter = require('./reviewRoutes');
+
 const router = express.Router();
+
+// requests coming into Tour Routes looking for '/:tourId/reviews' get passed through to the review Router
+router.use('/:tourId/reviews', reviewRouter);
 
 ////MIDDLEWARE
 // can set params on your router
@@ -26,9 +31,11 @@ router
   .patch(tourController.updateTour)
   .delete(
     authController.auth,
-    //function to restrict access by role 
+    //function to restrict access by role
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour
   );
+
+
 
 module.exports = router;

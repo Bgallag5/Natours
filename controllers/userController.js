@@ -2,6 +2,13 @@ const User = require('../models/User');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+const handlerFactory = require('./handlerFactory');
+
+exports.getOneUser = handlerFactory.getOne(User);
+exports.updateUser = handlerFactory.updateOne(User);
+exports.deleteUser = handlerFactory.deleteOne(User);
+exports.getAllUsers = handlerFactory.getAll(User);
+
 //filter req.body - takes user and the specified fields we allow to be updated
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -14,18 +21,6 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find({});
-
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   console.log('USER', req.user);
@@ -45,38 +40,20 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      user: updatedUser
-    }
+      user: updatedUser,
+    },
   });
 });
 
-exports.deleteMe = catchAsync( async (req, res, next) => {
-  await User.findByIdAndUpdate(req.user.id, {active: false})
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
   res.status(204).json({
     status: 'success',
-    data: null
-  })
-})
+    data: null,
+  });
+});
 
 exports.createUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet set up.',
-  });
-};
-exports.getOneUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet set up.',
-  });
-};
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet set up.',
-  });
-};
-exports.deleteUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'This route is not yet set up.',

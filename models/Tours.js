@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator');
-
+const { isAlpha } = require('validator');
 
 const tourSchema = new Schema(
   {
@@ -13,7 +12,7 @@ const tourSchema = new Schema(
       unique: true,
       trim: true,
       //isAlpha checks if string is only alphabet charcters
-      validate: [validator.isAlpha, 'Tour name can only be letters']
+      // validate: [validator.isAlpha, 'Tour name can only be letters'],
     },
     duration: {
       type: Number,
@@ -51,7 +50,7 @@ const tourSchema = new Schema(
       validate: {
         validator: function (val) {
           //return true/false via comparison
-          // can only use this keyword in validator when creating NEW documents 
+          // can only use this keyword in validator when creating NEW documents
           return val < this.price;
         },
         message: 'Discount price ({VALUE}) should be less than price',
@@ -89,6 +88,34 @@ const tourSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    startLocation: {
+      //Geo-Json
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      address: String,
+      description: String,
+    },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    guides: [{
+      type: Schema.ObjectId,
+      ref: "User"
+    }]
   },
   {
     toJSON: {
@@ -103,6 +130,15 @@ const tourSchema = new Schema(
 //use function keyword to have access to 'this' as a ref to Tour obj
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
+});
+
+// Virtual populate 
+// connect the 'tour' field on 'Review' to the _id field on this model (Tour)
+// virtuals keep a reference to the child documents without storing that data in the DB
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: "_id"
 });
 
 //DOCUMENT MIDDLEWARE - runs before .save() and .create() commands, but NOT .update()
@@ -120,6 +156,16 @@ tourSchema.post('save', function (document, next) {
   next();
 });
 
+// // get guides by their ID's
+// tourSchema.pre('save', async function(next){
+//   // .map() over this.guides - await User.find - return Array of promises 
+//   const guidesPromises = this.guides.map(async id => await User.findById(id));
+//   // .resolve promises before assignment to this.guides 
+//   this.guides = await Promise.all(guidesPromises)
+//   next();
+// })
+
+
 // QUERY MIDDLEWARE
 //on the 'find' hook the 'this' keyword refers to the QUERY NOT the OBJECT
 // regex /^find/ catches ALL find methods: find(), findOne(), findById()
@@ -129,6 +175,15 @@ tourSchema.pre(/^find/, function (next) {
   this.start = Date.now();
   next();
 });
+
+//Query middleware - all find queries will populate the guides field 
+tourSchema.pre(/^find/, function(next){
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+  next();
+})
 
 tourSchema.post(/^find/, function (docs, next) {
   // log the time it takes to execute
