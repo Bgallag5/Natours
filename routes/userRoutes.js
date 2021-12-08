@@ -4,24 +4,24 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-router
-.route('/signup')
-.post(authController.signup);
-
+//full access to anyone
+router.route('/signup').post(authController.signup);
 router.route('/login').post(authController.login);
-
 router.route('/forgotPassword').post(authController.forgotPassword);
-
-router.route('/updateMe').patch(authController.auth, userController.updateMe);
-
-router.route('/deleteMe').delete(authController.auth, userController.deleteMe);
-
-router
-  .route('/updatePassword')
-  .patch(authController.auth, authController.updatePassword);
-
 router.route('/resetPassword/:token').patch(authController.resetPassword);
 
+//middleware runs in order; must pass this auth check to access any routes written after this line; will only call next() if auth passes
+//AUTH PROTECT all routes below this line
+router.use(authController.auth);
+
+//must be logged in to use these routes
+router.route('/me').get(userController.getMe, userController.getOneUser);
+router.route('/updateMe').patch(userController.updateMe);
+router.route('/deleteMe').delete(userController.deleteMe);
+router.route('/updatePassword').patch(authController.updatePassword);
+
+//RESTRICT TO ADMIN all routes below this line
+router.use(authController.restrictTo('admin'));
 router
   .route('/')
   .get(userController.getAllUsers)
@@ -30,7 +30,7 @@ router
 router
   .route('/:id')
   .get(userController.getOneUser)
-  // DO NOT use this patch to update a user's password 
+  // DO NOT use this patch to update a user's password
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 

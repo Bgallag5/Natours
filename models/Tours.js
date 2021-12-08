@@ -33,9 +33,9 @@ const tourSchema = new Schema(
     },
     ratingsAverage: {
       type: Number,
-      default: 5,
+      default: 4.5,
       min: [1, 'Rating must be at least 1'],
-      max: [10, 'Rating cant be higher than 10'],
+      max: [5, 'Rating cant be higher than 5'],
     },
     ratingsQuantity: {
       type: Number,
@@ -126,6 +126,10 @@ const tourSchema = new Schema(
     },
   }
 );
+//add index on tourSchema; index by price ascending(1) - or decending(-1)
+//pre built indexes can vastly improve READ performance
+tourSchema.index({price: 1, ratingsAverage: -1})
+tourSchema.index({slug: 1})
 
 //use function keyword to have access to 'this' as a ref to Tour obj
 tourSchema.virtual('durationWeeks').get(function () {

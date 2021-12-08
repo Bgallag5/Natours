@@ -4,60 +4,76 @@ const bcrypt = require('bcrypt');
 //built in node module for encryption
 const crypto = require('crypto');
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    validate: [validator.isEmail, 'Must be a valid email'],
-    lowercase: true,
-  },
-  role: {
-    type: String,
-    enum: ['user', 'admin', 'guide', 'lead-guide'],
-    default: 'user',
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-    // dont select when returning data
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: true,
-    validate: {
-      // match password and confirm - ONLY WORKS ON CREATE and SAVE
-      validator: function (val) {
-        return val === this.password;
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      validate: [validator.isEmail, 'Must be a valid email'],
+      lowercase: true,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin', 'guide', 'lead-guide'],
+      default: 'user',
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+      // dont select when returning data
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: true,
+      validate: {
+        // match password and confirm - ONLY WORKS ON CREATE and SAVE
+        validator: function (val) {
+          return val === this.password;
+        },
+        message: 'Passwords do not match!!',
       },
-      message: 'Passwords do not match!!',
+    },
+    passwordChangedAt: {
+      type: Date,
+    },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetExpires: {
+      type: Date,
+    },
+    photo: {
+      type: String,
+    },
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
     },
   },
-  passwordChangedAt: {
-    type: Date,
-  },
-  passwordResetToken: {
-    type: String,
-  },
-  passwordResetExpires: {
-    type: Date,
-  },
-  photo: {
-    type: String,
-  },
-  active: {
-    type: Boolean,
-    default: true,
-    select: false
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
   }
+);
+
+userSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'user',
+  localField: '_id',
 });
 
 //hash password
@@ -81,11 +97,11 @@ userSchema.pre('save', function (next) {
 
 //before every 'find' filter out inactive users
 // deleted user are still in DB but never return in a 'find'
-userSchema.pre(/^find/, function(next){
+userSchema.pre(/^find/, function (next) {
   //active not equal to false
-  this.find({active: {$ne: false}});
+  this.find({ active: { $ne: false } });
   next();
-})
+});
 
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {

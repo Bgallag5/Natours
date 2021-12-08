@@ -11,10 +11,10 @@ exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const document = await Model.create(req.body);
 
-    res.status(204).json({
+    res.status(201).json({
       status: 'Success',
       data: {
-        data: document,
+        body: document
       },
     });
   });
@@ -23,6 +23,7 @@ exports.createOne = (Model) =>
 // options param allows us to differentially populate fields
 exports.getOne = (Model, options) =>
   catchAsync(async (req, res, next) => {
+     
     // if options: build query with populate options
     let query = Model.findById(req.params.id);
     if (options) query = query.populate(options);

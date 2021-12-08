@@ -18,24 +18,38 @@ router
 
 router.route('/tour-stats').get(tourController.getTourStats);
 
-router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
+router
+  .route('/monthly-plan/:year')
+  .get(
+    authController.auth,
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
+    tourController.getMonthlyPlan
+  );
 
 router
   .route('/')
-  .get(authController.auth, tourController.getAllTours)
-  .post(tourController.createTour);
+  .get(tourController.getAllTours)
+  //only admins and lead guides can post tours
+  .post(
+    authController.auth,
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.createTour
+  );
 
 router
   .route('/:id')
   .get(tourController.getOneTour)
-  .patch(tourController.updateTour)
+  //only admins and lead guides can edit tours
+  .patch(
+    authController.auth,
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.updateTour
+  )
   .delete(
     authController.auth,
     //function to restrict access by role
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour
   );
-
-
 
 module.exports = router;

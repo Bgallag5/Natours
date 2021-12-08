@@ -3,12 +3,6 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const handlerFactory = require('./handlerFactory');
-
-exports.getOneUser = handlerFactory.getOne(User);
-exports.updateUser = handlerFactory.updateOne(User);
-exports.deleteUser = handlerFactory.deleteOne(User);
-exports.getAllUsers = handlerFactory.getAll(User);
-
 //filter req.body - takes user and the specified fields we allow to be updated
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -21,6 +15,18 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
+
+exports.getOneUser = handlerFactory.getOne(User, 'reviews');
+exports.updateUser = handlerFactory.updateOne(User);
+exports.deleteUser = handlerFactory.deleteOne(User);
+exports.getAllUsers = handlerFactory.getAll(User);
+
+//getOne handlerFactory searches for User by req.params.id
+//getMe middleware sets req.params.id = req.user.id, then can call the getOne endpoint  
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+}
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   console.log('USER', req.user);
