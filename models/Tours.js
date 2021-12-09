@@ -36,6 +36,7 @@ const tourSchema = new Schema(
       default: 4.5,
       min: [1, 'Rating must be at least 1'],
       max: [5, 'Rating cant be higher than 5'],
+      set: val => Math.round(val * 10) / 10 // sets rating to one decimal place
     },
     ratingsQuantity: {
       type: Number,

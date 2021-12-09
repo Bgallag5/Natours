@@ -77,23 +77,23 @@ userSchema.virtual('reviews', {
 });
 
 //hash password
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const salt = 12;
-    this.password = await bcrypt.hash(this.password, salt);
-    this.passwordConfirm = undefined;
-  }
-  next();
-});
+// userSchema.pre('save', async function (next) {
+//   if (this.isNew || this.isModified('password')) {
+//     const salt = 12;
+//     this.password = await bcrypt.hash(this.password, salt);
+//     this.passwordConfirm = undefined;
+//   }
+//   next();
+// });
 
-userSchema.pre('save', function (next) {
-  //if password has not been changed or if this is a new document, continue middleware
-  if (!this.isModified('password') || this.isNew) return next();
-  //else set new passwordChangedAt property
-  // set to 1 second in the past: ensures changedAt iat is less than token iat
-  this.passwordChangedAt = Date.now() - 1000;
-  next();
-});
+// userSchema.pre('save', function (next) {
+//   //if password has not been changed or if this is a new document, continue middleware
+//   if (!this.isModified('password') || this.isNew) return next();
+//   //else set new passwordChangedAt property
+//   // set to 1 second in the past: ensures changedAt iat is less than token iat
+//   this.passwordChangedAt = Date.now() - 1000;
+//   next();
+// });
 
 //before every 'find' filter out inactive users
 // deleted user are still in DB but never return in a 'find'

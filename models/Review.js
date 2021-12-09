@@ -41,6 +41,10 @@ const reviewSchema = new Schema(
   }
 );
 
+//use index and unique: true to ensure each tour/user pair is unique
+// aka: users can only create one review per tour
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true })
+
 // QUERY MIDDLEWARE
 // populate reviews with it's User's name and photo on find()
 // path references a field on THIS model
