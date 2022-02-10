@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
+    "dev": "concurrently \"nodemon server.js\" \"cd client && npm start\"",
     "start:prod": "NODE_ENV=production node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^3.4.0",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
@@ -29,6 +30,7 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "concurrently": "^7.0.0",
     "prettier": "^2.3.2"
   },
   "engines": {

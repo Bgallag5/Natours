@@ -1,12 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const path = require('path');
 //Helmet helps you secure your Express apps by setting various HTTP headers
 //helmet is security middleware, used to block DNS/DDOS
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cors = require('cors')
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -19,6 +21,8 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 // Set Security HTTP headers with helmet
 app.use(helmet());
+//allow http requests to server with cors 
+app.use(cors());
 
 //Development logging
 if (process.env.NODE_ENV === 'development') {
@@ -60,7 +64,8 @@ app.use(
 );
 
 //serving static files
-app.use(express.static(`${__dirname}/public`));
+// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, "public")))
 
 //Test Middleware
 app.use((req, res, next) => {

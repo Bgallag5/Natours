@@ -412,8 +412,9 @@
     align-items: center;
     text-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15);
   }
-  .heading-box__detail svg {
+  .heading-box__detail i {
     margin-right: 0.8rem;
+    /* vertical-align:top; */
   }
   .heading-box__detail:not(:last-child) {
     margin-right: 4rem;
@@ -474,7 +475,7 @@
     align-items: center;
     font-weight: 400;
   }
-  .overview-box__detail svg {
+  .overview-box__detail i {
     margin-right: 1.25rem;
   }
   .overview-box__detail:not(:last-child) {
@@ -969,7 +970,7 @@
     -webkit-transform: translateY(1px);
     transform: translateY(1px);
   }
-  .nav__search-btn svg {
+  .nav__search-btn i {
     height: 2rem;
     width: 2rem;
     fill: #f7f7f7;
@@ -1051,7 +1052,7 @@
     -webkit-transform: translateX(3px);
     transform: translateX(3px);
   }
-  .side-nav svg {
+  .side-nav i {
     height: 1.9rem;
     width: 1.9rem;
     fill: #f7f7f7;
@@ -1223,7 +1224,7 @@
   }
   
   .login-form {
-    margin: 0 auto;
+    margin: 1vh auto;
     max-width: 55rem;
     background-color: #fff;
     -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);

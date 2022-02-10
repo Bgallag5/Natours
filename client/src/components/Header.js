@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Logo from '../img/logo-white.png';
+// import Logo from '../img/logo-white.png';
 
 export default function Header() {
   return (
@@ -9,11 +9,11 @@ export default function Header() {
         <a className="nav__el" href='/'>All tours</a>
       </nav>
       <div className="header__logo">
-        <img src={Logo} alt="white logo"></img>
+        <img src='/img/logo-white.png' alt="white logo"></img>
       </div>
       <nav className="nav nav--user">
-        <a className="nav__el" href='/'>Log In</a>
-        <a className="nav__el nav__el--cta" href='/'>Sign Up</a>
+        <a className="nav__el" href='/login'>Log In</a>
+        <a className="nav__el nav__el--cta" href='/signup'>Sign Up</a>
       </nav>
     </header>
   );
