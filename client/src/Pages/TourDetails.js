@@ -2,6 +2,10 @@ import React, { useContext, useEffect } from 'react';
 
 import TourHero from '../components/Tour/TourHero';
 import TourInfo from '../components/Tour/TourInfo';
+import TourPhotos from '../components/Tour/TourPhotos';
+import TourReviews from '../components/Tour/TourReviews';
+
+import { calcNextStartDate } from '../utils/Helpers';
 
 import { GlobalContext } from '../App';
 import axios from 'axios';
@@ -9,15 +13,14 @@ import axios from 'axios';
 export default function TourDetails() {
   const { currentUser, selectedTour, setSelectedTour} = useContext(GlobalContext);
 
-  console.log(window.location);
 
   const getDetails = async () => {
     const currentSlug = window.location.href.split('/').pop()
-    console.log(currentSlug);
     const currentTour = await axios.get(`http://localhost:3001/api/v1/tours`, {params: { slug: currentSlug}}); // /${id}
-    console.log(currentTour.data.data.document);
-    setSelectedTour(...currentTour.data.data.document)
-  };
+    currentTour.data.data.document[0].nextStartDate = calcNextStartDate(currentTour.data.data.document[0].startDates)
+    console.log(currentTour);
+    setSelectedTour({...currentTour.data.data.document[0]})
+};
 
 useEffect(() => {
     getDetails();
@@ -32,6 +35,9 @@ useEffect(() => {
     {selectedTour &&
     <>
     <TourHero selectedTour={selectedTour} />
+    <TourInfo selectedTour={selectedTour} />
+    <TourPhotos selectedTour={selectedTour} />
+    <TourReviews selectedTour={selectedTour} />
       <section className="section-cta">
         <div className="cta">
           <div className="cta__img cta__img--logo">

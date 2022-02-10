@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function TourHero({selectedTour}) {
-    console.log(selectedTour);
+
 
   return (
     <section className="section-header">

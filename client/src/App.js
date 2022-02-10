@@ -15,7 +15,7 @@ export const GlobalContext = React.createContext();
 function App() {
   const [currentUser, setCurrentUser] = useState('');
   const [tours, setTours] = useState([]);
-  const [selectedTour, setSelectedTour] = useState([]);
+  const [selectedTour, setSelectedTour] = useState('');
 
   const globalVars = {
     currentUser,

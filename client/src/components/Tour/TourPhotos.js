@@ -1,29 +1,24 @@
 import React from 'react';
 
-export default function TourPhotos() {
+export default function TourPhotos({ selectedTour }) {
+  const { images } = selectedTour;
+
+  let i = 0;
   return (
     <section className="section-pictures">
-    <div className="picture-box">
-      <img
-        className="picture-box__img picture-box__img--1"
-        src="/img/tours/tour-1-1.jpg"
-        alt="The Forest Hiker Tour 1"
-      />
-    </div>
-    <div className="picture-box">
-      <img
-        className="picture-box__img picture-box__img--2"
-        src="/img/tours/tour-1-2.jpg"
-        alt="The Forest Hiker Tour 2"
-      />
-    </div>
-    <div className="picture-box">
-      <img
-        className="picture-box__img picture-box__img--3"
-        src="/img/tours/tour-1-3.jpg"
-        alt="The Forest Hiker Tour 3"
-      />
-    </div>
-  </section>
+      {images &&
+        images.map((image) => {
+          i++;
+          return (
+            <div key={image} className="picture-box">
+              <img
+                className={`picture-box__img picture-box__img--${i}`}
+                src={`/img/tours/${image}`}
+                alt="The Forest Hiker Tour 1"
+              />
+            </div>
+          );
+        })}
+    </section>
   );
 }

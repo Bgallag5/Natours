@@ -1,10 +1,10 @@
-import React , {useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import { GlobalContext } from '../../App';
+import { calcNextStartDate } from '../../utils/Helpers';
 
-export default function TourCard({tour}) {
-
+export default function TourCard({ tour }) {
   const { selectedTour, setSelectedTour } = useContext(GlobalContext);
 
   const {
@@ -27,41 +27,18 @@ export default function TourCard({tour}) {
     locations,
   } = tour;
 
-  let nextTour;
-
-  function calcNextStartDate(datesArr) {
-    let today = new Date(Date.now());
-    //loop over startDates and return the next most upcoming date
-    for (let i = 0; i < datesArr.length; i++) {
-      let date = new Date(datesArr[i]);
-      if (today < date) {
-        nextTour = date.toDateString().split(' ');
-        return nextTour;
-      }
-    }
-    return nextTour = 'No Tours Scheduled';
-  }
-
-  // IIFE on app load: get startDates 
-  (function(){
-    calcNextStartDate(startDates)
-  })();
-
-  // const handleTourClick = async (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target.id);
- 
-  //   setSelectedTourID(e.target.id);
-  //   //navigate to tourDetails Page, _self opens in same window
-  //   window.open('/tourDetails', "_self")
-  // }
+  const nextTour = calcNextStartDate(startDates);
 
   return (
     <div className="card">
       <div className="card__header">
         <div className="card__picture">
           <div className="card__picture-overlay"></div>
-          <img className="card__picture-img" src={`/img/tours/${imageCover}`} alt="Tour"></img>
+          <img
+            className="card__picture-img"
+            src={`/img/tours/${imageCover}`}
+            alt="Tour"
+          ></img>
         </div>
         <h3 className="heading-tertirary">
           <span>{name}</span>
@@ -83,7 +60,13 @@ export default function TourCard({tour}) {
           <i className="card__icon ">
             <span className="material-icons">date_range</span>
           </i>
-          {typeof(nextTour) === 'string' ? <span>{"No tours planned"}</span> : <span>{nextTour[1]} {nextTour[3]} </span>}
+          {typeof nextTour === 'string' ? (
+            <span>{'No tours planned'}</span>
+          ) : (
+            <span>
+              {nextTour[1]} {nextTour[3]}{' '}
+            </span>
+          )}
         </div>
         <div className="card__data">
           <i className="card__icon ">
@@ -105,14 +88,16 @@ export default function TourCard({tour}) {
           <span className="card__footer-text">per person</span>
         </p>
         <p className="card__ratings">
-          <span className="card__footer-value">{ratingsAverage.toFixed(1)}</span>
+          <span className="card__footer-value">
+            {ratingsAverage.toFixed(1)}
+          </span>
           <span className="card__footer-text">{` rating (${ratingsQuantity})`}</span>
         </p>
-        <a 
-        className="btn btn--green btn--small" 
-        href={`/tour/${tour.slug}`}
-        // id={_id}
-        // onClick={() => setSelectedTourID(_id)}
+        <a
+          className="btn btn--green btn--small"
+          href={`/tour/${tour.slug}`}
+          // id={_id}
+          // onClick={() => setSelectedTourID(_id)}
         >
           Details
         </a>
@@ -120,5 +105,3 @@ export default function TourCard({tour}) {
     </div>
   );
 }
-
-

@@ -18,7 +18,6 @@ export default function Overview() {
       setTours(res.data.data.document);
     });
   }, []);
-  console.log(tours);
 
   return (
     <div className="card-container">
