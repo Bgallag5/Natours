@@ -15,7 +15,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((connection) => {
-    console.log('DB-Connection Successful');
+    console.log('DB-Connection-Successful');
   });
 
 //READ JSON FILE
