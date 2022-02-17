@@ -5,7 +5,7 @@ import axios from 'axios';
 import { GlobalContext } from '../App';
 
 export default function Overview() {
-  const {tours, setTours} = useContext(GlobalContext)
+  const {tours, setTours, currentUser} = useContext(GlobalContext);
 
   const getTourData = async () => {
     const data = await axios.get('http://localhost:3001/api/v1/tours');
@@ -18,6 +18,8 @@ export default function Overview() {
       setTours(res.data.data.document);
     });
   }, []);
+
+  // console.log(currentUser);
 
   return (
     <div className="card-container">

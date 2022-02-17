@@ -22,7 +22,7 @@ export default function Footer() {
           <a href="/">Contact</a>
         </li>
       </ul>
-      <p className="footer__copyright">© 2022 by Jonas Schmedtmann.</p>
+      <p className="footer__copyright">© 2022 by Ben Gallagher.</p>
     </div>
   );
 }

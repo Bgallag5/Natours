@@ -8,7 +8,8 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-const cors = require('cors')
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -18,16 +19,25 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
+app.enable('trust proxy')
+
 // 1) GLOBAL MIDDLEWARES
 // Set Security HTTP headers with helmet
 app.use(helmet());
+app.use(cookieParser())
+
 //allow http requests to server with cors 
 app.use(cors());
+app.options('*', cors());
+
 
 //Development logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+//serving static files
+app.use(express.static(path.join(__dirname, "public")))
 
 //Limit to 100 requests from same IP in 1 hour
 const limiter = rateLimit({
@@ -40,6 +50,7 @@ app.use('/api', limiter);
 
 //Body parser - reads data from body into req.body - limit body to 10kilobytes
 app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Data Sanitization against NoSQL query injections
 // checks req.query, req.params, req.body and filter out any symbols ($, .)
@@ -63,14 +74,13 @@ app.use(
   })
 );
 
-//serving static files
-// app.use(express.static(`${__dirname}/public`));
-app.use(express.static(path.join(__dirname, "public")))
+
 
 //Test Middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.headers);
+  console.log('REQ.COOKIES:::::::::::::');
+  console.log(req.cookies);
   next();
 });
 

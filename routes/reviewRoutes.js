@@ -7,7 +7,7 @@ const reviewController = require('../controllers/reviewController');
 const router = express.Router({ mergeParams: true });
 
 //auth protect all routes below this line
-router.use(authController.auth)
+router.use(authController.isLoggedIn)
 
 router
   .route('/')

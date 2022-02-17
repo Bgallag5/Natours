@@ -2,6 +2,8 @@ import React from 'react';
 
 export default function TourHero({selectedTour}) {
 
+  const {type, coordinate, address, description} = selectedTour.startLocation;
+  console.log(selectedTour);
 
   return (
     <section className="section-header">
@@ -23,7 +25,7 @@ export default function TourHero({selectedTour}) {
             <i className="heading-box__icon">
             <span className="material-icons">schedule</span>
           </i>
-          <span className="heading-box__text">5 days</span>
+          <span className="heading-box__text">{selectedTour.duration} Days</span>
         </div>
         <div className="heading-box__detail">
           {/* <svg className="heading-box__icon">
@@ -32,7 +34,7 @@ export default function TourHero({selectedTour}) {
             <i className="heading-box__icon">
             <span className="material-icons">place</span>
           </i>
-          <span className="heading-box__text">Banff, CAN</span>
+          <span className="heading-box__text">{selectedTour.startLocation.description}</span>
         </div>
       </div>
     </div>

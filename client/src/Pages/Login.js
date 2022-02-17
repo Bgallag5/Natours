@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { GlobalContext } from '../App';
 
-//this is the way, use axios requests to hit your back end s
 export default function Login() {
   const [formState, setFormState] = useState({
     email: '',
     password: '',
   });
+
+  const { currentUser, setCurrentUser, tours } = useContext(GlobalContext);
 
   const handleFormChange = (e) => {
     setFormState({ ...formState, [e.target.id]: e.target.value });
@@ -18,21 +18,35 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = formState;
-
+    //this is the way, use axios requests to hit your back end
     try {
       const res = await axios({
         method: 'POST',
-        url: '/api/v1/users/login',
+        url: 'http://localhost:3000/api/v1/users/login',
         data: {
           email,
           password,
         },
       });
       console.log(res);
+      if (res.data.status === 'success') {
+        // showAlert('success', 'Logged in successfully!');
+        //route to overview page once logged in
+        window.setTimeout(() => {
+          window.location.assign('/');
+        }, 2000);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  // if (isAuthenticated) {
+  //   console.log("REDIRECTED");
+  //   return <Navigate to="/dashboard" />;
+  // }
+
+  console.log(currentUser);
 
   return (
     <>

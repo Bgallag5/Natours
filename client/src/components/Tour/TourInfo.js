@@ -60,7 +60,7 @@ export default function TourInfo({ selectedTour }) {
                 <span className="material-icons">trending_up</span>
               </i>
               <span className="overview-box__label">Rating</span>
-              <span className="overview-box__text">{ratingsAverage} / 5</span>
+              <span className="overview-box__text">{ratingsAverage.toFixed(1)} / 5</span>
             </div>
           </div>
           <div className="overview-box__group">

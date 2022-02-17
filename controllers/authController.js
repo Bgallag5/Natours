@@ -13,7 +13,7 @@ const signToken = (id) => {
   });
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
   const cookieOptions = {
@@ -21,6 +21,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   };
   //when in production set 'secure' cookie header to true
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
@@ -28,6 +29,7 @@ const createSendToken = (user, statusCode, res) => {
   res.cookie('jwt', token, cookieOptions);
   //Remove password from response
   user.password = undefined;
+
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -49,7 +51,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordChangedAt,
     role,
   });
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -68,12 +70,22 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!correctPassword) return next(new AppError('Invalid Credentials', 401));
 
   //3 Send Request
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
+
+exports.logout = catchAsync(async (req, res, next) => {
+  // clear jwt and send response with old expiration
+  res.cookie("jwt", "null", {
+    expires: new Date(Date.now() - 10 * 1000),
+    httpOnly: true
+  });
+  //set user to null?
+  res.status(200).json({status: 'success'})
+}) 
 
 // AUTH Middleware - check the user is logged in
 exports.auth = catchAsync(async (req, res, next) => {
-  //const and let are block scoped - must let token outside of conditional
+
   let token;
   // CHECK FOR TOKEN
   if (
@@ -81,6 +93,8 @@ exports.auth = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
   if (!token) return next(new AppError('User is not authorized', 401));
   //VERIFY TOKEN
@@ -102,7 +116,37 @@ exports.auth = catchAsync(async (req, res, next) => {
   // GRANT ACCESS TO PROTECTED ROUTES
   // set req.user to current user
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
+});
+
+//front end Logged in check
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+
+  // CHECK FOR COOKIE
+  if (req.cookies.jwt) {
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWTSECRET
+    );
+
+    // CHECK USER STILL EXISTS
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) return next();
+
+    //Check if the password has been changed since token was issued
+    // pass in time the token was issued at
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    // There is a logged in user
+    res.locals.user = currentUser;
+    console.log('USER IS LOGGED IN! PASSED isLOGGEDIn CHECK!');
+    return next();
+  }
+
+ return next(new AppError('BAD BAD BAD', 404));
 });
 
 // for middleware to accept arguments: wrap the middleware function inside another function that takes in params
@@ -205,5 +249,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   //4 LOG USER IN, send JWT
   // generate token and log user in
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
