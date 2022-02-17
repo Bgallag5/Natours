@@ -79,8 +79,8 @@ app.use(
 //Test Middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log('REQ.COOKIES:::::::::::::');
-  console.log(req.cookies);
+  console.log(':::::::::::REQ.USER:::::::::::::');
+  console.log(req.user);
   next();
 });
 

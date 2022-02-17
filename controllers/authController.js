@@ -14,6 +14,8 @@ const signToken = (id) => {
 };
 
 const createSendToken = (user, statusCode, req, res) => {
+  console.log('CREATESENDTOKEN--USER');
+  console.log(user);
   const token = signToken(user._id);
 
   const cookieOptions = {
@@ -115,6 +117,8 @@ exports.auth = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTES
   // set req.user to current user
+  console.log('AUTHPROTECT-currentUser:::::');
+  console.log(currentUser);
   req.user = currentUser;
   res.locals.user = currentUser;
   next();
@@ -141,7 +145,10 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     }
 
     // There is a logged in user
-    res.locals.user = currentUser;
+    // res.locals.user = currentUser;
+    console.log('isLOGGEDIN-currentUser:::::');
+    console.log(currentUser);
+    res.user = currentUser;
     console.log('USER IS LOGGED IN! PASSED isLOGGEDIn CHECK!');
     return next();
   }
@@ -153,6 +160,7 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 // check if a route allows access to user via role
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
+    console.log(req.user);
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('You do not have permission for this action', 403)
