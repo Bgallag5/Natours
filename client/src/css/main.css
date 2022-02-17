@@ -609,6 +609,7 @@ body {
   -ms-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
 }
+
 .reviews__card {
   width: 30rem;
   padding: 4rem;
@@ -790,9 +791,31 @@ body {
   padding: 7rem 0;
 }
 .user-view__form-container {
-  max-width: 68rem;
+  max-width: 80rem;
   margin: 0 auto;
-  padding: 0 8rem;
+  padding: 0 4rem;
+}
+
+.user-view__review-container {
+  max-width: 80rem;
+  margin: 0;
+  padding: 0 4rem;
+}
+
+.user-reviews {
+  background: linear-gradient(to right bottom, #7dd56f, #28b487);
+  clip-path: polygon(
+    0 1vw,
+    100% 0,
+    100% 95%,
+    0 100%
+  );
+  -webkit-clip-path: polygon(
+    0 1vw,
+    100% 0,
+    100% 95%,
+    0 100%
+  );
 }
 
 .footer {

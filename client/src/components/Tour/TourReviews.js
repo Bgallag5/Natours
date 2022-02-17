@@ -17,36 +17,17 @@ export default function TourReviews({ selectedTour }) {
     getReviewData();
   }, []);
 
-  //display in JSX
-  // createdAt, id, rating, review, tour, user: {name, photo, _id}
-
   console.log(reviews);
 
-  reviews && reviews.forEach(review => {
-    let num = Math.round(review.rating);
-    console.log(num);
-    review.numberStars = [];
-    for (let i = 0; i < num; i++) {
-      review.numberStars.push('star')
-    }
-  })
-
-  
-
-  // const calcStars = (ratingNum) => {
-  //   console.log(ratingNum);
-  //   let num = Math.round(ratingNum);
-  //   console.log(num);
-
-  //   for (let i = 0; i < num; i++) {
-  //     numStars.push(
-  //       <i className="reviews__star reviews__star--active">
-  //         <span className="material-icons">star</span>
-  //       </i>
-  //     );
-  //   }
-  // };
-  
+  reviews &&
+    reviews.forEach((review) => {
+      let num = Math.round(review.rating);
+      console.log(num);
+      review.numberStars = [];
+      for (let i = 0; i < num; i++) {
+        review.numberStars.push('star');
+      }
+    });
 
   return (
     <section className="section-reviews">
@@ -65,12 +46,12 @@ export default function TourReviews({ selectedTour }) {
                 </div>
                 <p className="reviews__text">{review.review}</p>
                 <div className="reviews__rating">
-                  {review.numberStars.map(star => {
+                  {review.numberStars.map((star) => {
                     return (
                       <i className="reviews__star reviews__star--active">
-                      <span className="material-icons">star</span>
-                    </i>
-                    )
+                        <span className="material-icons">star</span>
+                      </i>
+                    );
                   })}
                 </div>
               </div>
@@ -80,4 +61,3 @@ export default function TourReviews({ selectedTour }) {
     </section>
   );
 }
-
