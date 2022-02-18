@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import { GlobalContext } from '../../App';
-import { calcNextStartDate } from '../../utils/Helpers';
+import { calcNextStartDate } from '../../utils/helpers';
 
 export default function TourCard({ tour }) {
   const { selectedTour, setSelectedTour } = useContext(GlobalContext);

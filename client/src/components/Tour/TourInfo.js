@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { calcNextStartDate } from '../../utils/Helpers';
+import { calcNextStartDate } from '../../utils/helpers';
 
 export default function TourInfo({ selectedTour }) {
   console.log(selectedTour);

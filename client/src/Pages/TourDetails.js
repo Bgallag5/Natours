@@ -5,7 +5,7 @@ import TourInfo from '../components/Tour/TourInfo';
 import TourPhotos from '../components/Tour/TourPhotos';
 import TourReviews from '../components/Tour/TourReviews';
 
-import { calcNextStartDate } from '../utils/Helpers';
+import { calcNextStartDate } from '../utils/helpers';
 
 import { GlobalContext } from '../App';
 import axios from 'axios';

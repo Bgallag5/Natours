@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import {calcStars} from '../../utils/helpers';
+
 export default function TourReviews({ selectedTour }) {
   const [reviews, setReviews] = useState('');
 
@@ -9,7 +11,6 @@ export default function TourReviews({ selectedTour }) {
     const response = await axios.get(
       `/api/v1/tours/${selectedTour._id}/reviews`
     );
-    console.log(response.data.data.document);
     setReviews(response.data.data.document);
   };
 
@@ -19,15 +20,9 @@ export default function TourReviews({ selectedTour }) {
 
   console.log(reviews);
 
-  reviews &&
-    reviews.forEach((review) => {
-      let num = Math.round(review.rating);
-      console.log(num);
-      review.numberStars = [];
-      for (let i = 0; i < num; i++) {
-        review.numberStars.push('star');
-      }
-    });
+  if(reviews){
+    calcStars(reviews)
+  }
 
   return (
     <section className="section-reviews">
@@ -48,7 +43,7 @@ export default function TourReviews({ selectedTour }) {
                 <div className="reviews__rating">
                   {review.numberStars.map((star) => {
                     return (
-                      <i className="reviews__star reviews__star--active">
+                      <i key={Math.random() * 100} className="reviews__star reviews__star--active">
                         <span className="material-icons">star</span>
                       </i>
                     );
