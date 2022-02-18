@@ -800,6 +800,40 @@ body {
   max-width: 80rem;
   margin: 0;
   padding: 0 4rem;
+  position: relative;
+}
+
+.review-edit-modal {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 70rem;
+height: 45rem;
+margin: 1vh auto;
+z-index: 9999;
+background-color: white;
+-webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+padding: 5rem 7rem;
+border-radius: 5px;
+transition: all .6s linear;
+overflow: hidden;
+};
+
+.modal-is-open{
+  overflow: hidden;
+}
+
+.is-blurred {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+  z-index: 1;
+}
+
+#review-text-edit{
+  height: 50%;
+  width: 75%;
 }
 
 .user-reviews {

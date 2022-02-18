@@ -10,7 +10,6 @@ const [page, setPage] = useState('settings');
 
 
   return (
-    <main className="main">
       <div className="user-view">
         <nav className="user-view__menu">
           <ul className="side-nav">
@@ -45,7 +44,6 @@ const [page, setPage] = useState('settings');
           <Reviews page={page} />
         </div>
       </div>
-    </main>
   );
 }
 
