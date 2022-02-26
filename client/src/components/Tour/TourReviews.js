@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
 import {calcStars} from '../../utils/helpers';
@@ -7,16 +7,17 @@ export default function TourReviews({ selectedTour }) {
   const [reviews, setReviews] = useState('');
 
   //axios request get reviews
-  const getReviewData = async () => {
+  const getReviewData = useCallback(async () => {
     const response = await axios.get(
       `/api/v1/tours/${selectedTour._id}/reviews`
     );
+    console.log('SETTING REVIEWS');
     setReviews(response.data.data.document);
-  };
+  }, [selectedTour]);
 
   useEffect(() => {
     getReviewData();
-  }, []);
+  }, [getReviewData]);
 
   console.log(reviews);
 
@@ -34,8 +35,8 @@ export default function TourReviews({ selectedTour }) {
                 <div className="reviews__avatar">
                   <img
                     className="reviews__avatar-img"
-                    src={`/img/users/${review.user.photo}`}
-                    alt="Ayla Cornell"
+                    src={ review.user.photo ? `/img/users/${review.user.photo}` : '/img/users/default.jpg'}
+                    alt={review.user.name}
                   />
                   <h6 className="reviews__user">{review.user.name}</h6>
                 </div>

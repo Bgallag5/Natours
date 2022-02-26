@@ -9,7 +9,7 @@ export default function Login() {
     password: '',
   });
 
-  const { currentUser, setCurrentUser, tours } = useContext(GlobalContext);
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
 
   const handleFormChange = (e) => {
     setFormState({ ...formState, [e.target.id]: e.target.value });

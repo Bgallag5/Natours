@@ -7,7 +7,6 @@ import { GlobalContext } from '../App';
 
 export default function Header() {
   const { tours, currentUser } = useContext(GlobalContext);
-  console.log(currentUser);
 
   const handleLogout = async () => {
     try {

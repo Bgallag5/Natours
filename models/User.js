@@ -95,8 +95,8 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-//before every 'find' filter out inactive users
-// deleted user are still in DB but never return in a 'find'
+// before every 'find' filter out inactive users
+// deleted user are still in DB but will never return in a 'find'
 userSchema.pre(/^find/, function (next) {
   //active not equal to false
   this.find({ active: { $ne: false } });

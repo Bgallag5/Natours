@@ -13,6 +13,7 @@ export const calcNextStartDate = (datesArr) => {
   return (nextTour = 'No Tours Scheduled');
 };
 
+//
 export const calcStars = (reviewArr) => {
   reviewArr.forEach(review => {
     let num = Math.round(review.rating);
