@@ -87,7 +87,8 @@ exports.logout = catchAsync(async (req, res, next) => {
 
 // AUTH Middleware - check the user is logged in
 exports.auth = catchAsync(async (req, res, next) => {
-
+  console.log('COOKIES:::::::::');
+  console.log(req.cookies);
   let token;
   // CHECK FOR TOKEN
   if (
@@ -98,6 +99,7 @@ exports.auth = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
+  console.log(token);
   if (!token) return next(new AppError('User is not authorized', 401));
   //VERIFY TOKEN
   // npm promisify makes a promise
@@ -117,10 +119,7 @@ exports.auth = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTES
   // set req.user to current user
-  console.log('AUTHPROTECT-currentUser:::::');
-  console.log(currentUser);
   req.user = currentUser;
-  res.locals.user = currentUser;
   next();
 });
 
@@ -146,21 +145,17 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 
     // There is a logged in user
     // res.locals.user = currentUser;
-    console.log('isLOGGEDIN-currentUser:::::');
-    console.log(currentUser);
     res.user = currentUser;
-    console.log('USER IS LOGGED IN! PASSED isLOGGEDIn CHECK!');
     return next();
   }
 
- return next(new AppError('BAD BAD BAD', 404));
+ return next(new AppError('MUST BE LOGGED IN', 404));
 });
 
 // for middleware to accept arguments: wrap the middleware function inside another function that takes in params
 // check if a route allows access to user via role
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    console.log(req.user);
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('You do not have permission for this action', 403)

@@ -201,6 +201,7 @@ body {
   /*Add later when we use this for the button in form*/
   border: none;
   cursor: pointer;
+  margin: 0 0.2em;
 }
 
 .btn:hover {
@@ -803,25 +804,48 @@ body {
   position: relative;
 }
 
-.review-edit-modal {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 70rem;
-height: 45rem;
-margin: 1vh auto;
-z-index: 9999;
-background-color: white;
--webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
-padding: 5rem 7rem;
-border-radius: 5px;
-transition: all .6s linear;
-overflow: hidden;
-};
+.booker {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-.modal-is-open{
+.booking-info {
+  margin: 0 3em;
+  max-width: 50rem;
+  width: 30%;
+}
+
+.tour-booking-header {
+  display: flex;
+  flex: row;
+  justify-content: space-between;
+}
+
+.booking-submit {
+  max-width: 50rem;
+  width: 30%;
+}
+
+.review-edit-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70rem;
+  height: 45rem;
+  margin: 1vh auto;
+  z-index: 9999;
+  background-color: white;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  padding: 5rem 7rem;
+  border-radius: 5px;
+  transition: all 0.6s linear;
+  overflow: hidden;
+}
+
+.modal-is-open {
   overflow: hidden;
 }
 
@@ -831,25 +855,16 @@ overflow: hidden;
   z-index: 1;
 }
 
-#review-text-edit{
-  height: 50%;
-  width: 75%;
+#review-text-edit {
+  height: 10em;
+  width: 100%;
+  padding: 5px;
 }
 
 .user-reviews {
   background: linear-gradient(to right bottom, #7dd56f, #28b487);
-  clip-path: polygon(
-    0 1vw,
-    100% 0,
-    100% 95%,
-    0 100%
-  );
-  -webkit-clip-path: polygon(
-    0 1vw,
-    100% 0,
-    100% 95%,
-    0 100%
-  );
+  clip-path: polygon(0 1vw, 100% 0, 100% 95%, 0 100%);
+  -webkit-clip-path: polygon(0 1vw, 100% 0, 100% 95%, 0 100%);
 }
 
 .footer {

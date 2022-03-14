@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-
 export default function SignUp() {
   const [formState, setFormState] = useState({
     name: '',
@@ -18,7 +15,6 @@ export default function SignUp() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log(formState);
     const { name, email, password, passwordConfirm } = formState;
 
     try {
@@ -32,9 +28,7 @@ export default function SignUp() {
           passwordConfirm,
         },
       });
-      console.log(res);
     } catch (err) {
-      console.log(err);
       throw new Error(err.message);
     }
   };

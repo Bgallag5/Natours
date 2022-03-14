@@ -16,19 +16,6 @@ const fileStorageEngine = multer.diskStorage({
   }
 });
 
-// const multerFilter = (req, file, cb) => {
-//   if (file.mimetype.startsWith('image')) {
-//     cb(null, true);
-//   } else {
-//     cb(new AppError('Not an image! Please upload only images.', 400), false);
-//   }
-// };
-
-const upload = multer({
-  storage: fileStorageEngine,
-  // fileFilter: multerFilter
-});
-
 exports.uploadUserPhoto = async (req, res, next) => {
   upload.single('photo');
 

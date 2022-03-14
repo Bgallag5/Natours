@@ -19,18 +19,12 @@ export default function TourHero({selectedTour}) {
       <h1 className="heading-primary"><span>{selectedTour.name}</span></h1>
       <div className="heading-box__group">
         <div className="heading-box__detail">
-          {/* <svg className="heading-box__icon">
-            <use xlink:href="/img/icons.svg#icon-clock"></use>
-          </svg> */}
             <i className="heading-box__icon">
             <span className="material-icons">schedule</span>
           </i>
           <span className="heading-box__text">{selectedTour.duration} Days</span>
         </div>
         <div className="heading-box__detail">
-          {/* <svg className="heading-box__icon">
-            <use xlink:href="/img/icons.svg#icon-map-pin"></use>
-          </svg> */}
             <i className="heading-box__icon">
             <span className="material-icons">place</span>
           </i>

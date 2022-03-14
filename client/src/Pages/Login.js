@@ -18,7 +18,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = formState;
-    //this is the way, use axios requests to hit your back end
+    // use axios requests to hit our back end
     try {
       const res = await axios({
         method: 'POST',
@@ -30,7 +30,6 @@ export default function Login() {
       });
       console.log(res);
       if (res.data.status === 'success') {
-        // showAlert('success', 'Logged in successfully!');
         //route to overview page once logged in
         window.setTimeout(() => {
           window.location.assign('/');
@@ -40,11 +39,6 @@ export default function Login() {
       console.log(err);
     }
   };
-
-  // if (isAuthenticated) {
-  //   console.log("REDIRECTED");
-  //   return <Navigate to="/dashboard" />;
-  // }
 
   console.log(currentUser);
 

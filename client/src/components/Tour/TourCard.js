@@ -92,8 +92,6 @@ export default function TourCard({ tour }) {
         <a
           className="btn btn--green btn--small"
           href={`/tour/${tour.slug}`}
-          // id={_id}
-          // onClick={() => setSelectedTourID(_id)}
         >
           Details
         </a>

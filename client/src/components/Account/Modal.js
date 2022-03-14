@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 
 export default function Modal({ props }) {
@@ -10,7 +10,8 @@ export default function Modal({ props }) {
     handleModalChange,
   } = props;
 
-  console.log(modalState);
+  const modalRef = useRef();
+
   async function handleReviewSubmit(e) {
     e.preventDefault();
     //axios update review
@@ -32,17 +33,18 @@ export default function Modal({ props }) {
     }
   }
 
-  //register click off modal => handleModalChange
+console.log(selectedReview);
   return (
     <div
       className="review-edit-modal"
       style={{ display: modalState === false ? 'none' : 'inline' }}
+      ref={modalRef}
     >
       <form className="form form__group">
         <h2 className="heading-secondary ma-bt-md">
           {selectedReview && selectedReview.tour.name}
         </h2>
-        <h4>Review written at: Date</h4>
+        <h3>Review written on: {new Date(selectedReview.createdAt).toLocaleDateString()}</h3>
         <label className="form__label">My Review:</label>
         <textarea
           id="review-text-edit"
@@ -51,7 +53,7 @@ export default function Modal({ props }) {
         ></textarea>
       </form>
       <button
-        className="btn btn-small"
+        className="btn btn--green"
         onClick={() => {
           handleModalChange();
         }}
@@ -60,7 +62,7 @@ export default function Modal({ props }) {
       </button>
       <button
         onClick={(e) => handleReviewSubmit(e)}
-        className="btn btn-green btn-small"
+        className="btn btn--green"
       >
         Save Review
       </button>

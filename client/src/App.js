@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+
 import Overview from './Pages/Overview';
 import Login from './Pages/Login';
 import SignUp from './Pages/SignUp';
 import TourDetails from './Pages/TourDetails';
 import Account from './Pages/Account';
+import BookTour from './Pages/BookTour';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './css/main.css';
@@ -33,7 +35,7 @@ function App() {
       try {
         const res = await axios({
           method: 'GET',
-          url: '/api/v1/users/me',
+          url: 'http://localhost:3000/api/v1/users/me',
         });
         console.log(res);
         if (res.statusText === 'OK') {
@@ -59,6 +61,7 @@ function App() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<SignUp />} />
             <Route exact path="/tour/:slug" element={<TourDetails />} />
+            <Route exact path="tour/:slug/book" element={<BookTour />} />
             <Route exact path="/account" element={<Account />} />
           </Routes>
         </main>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
-import {calcStars} from '../../utils/helpers';
+import { calcStars } from '../../utils/helpers';
 
 export default function TourReviews({ selectedTour }) {
   const [reviews, setReviews] = useState('');
@@ -21,8 +21,8 @@ export default function TourReviews({ selectedTour }) {
 
   console.log(reviews);
 
-  if(reviews){
-    calcStars(reviews)
+  if (reviews) {
+    calcStars(reviews);
   }
 
   return (
@@ -35,7 +35,11 @@ export default function TourReviews({ selectedTour }) {
                 <div className="reviews__avatar">
                   <img
                     className="reviews__avatar-img"
-                    src={ review.user.photo ? `/img/users/${review.user.photo}` : '/img/users/default.jpg'}
+                    src={
+                      review.user.photo
+                        ? `/img/users/${review.user.photo}`
+                        : '/img/users/default.jpg'
+                    }
                     alt={review.user.name}
                   />
                   <h6 className="reviews__user">{review.user.name}</h6>
@@ -44,7 +48,10 @@ export default function TourReviews({ selectedTour }) {
                 <div className="reviews__rating">
                   {review.numberStars.map((star) => {
                     return (
-                      <i key={Math.random() * 100} className="reviews__star reviews__star--active">
+                      <i
+                        key={Math.random() * 100}
+                        className="reviews__star reviews__star--active"
+                      >
                         <span className="material-icons">star</span>
                       </i>
                     );

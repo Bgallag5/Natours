@@ -27,9 +27,9 @@ const bookingSchema = new Schema({
   },
 });
 
-bookingSchema.virtual('totalPrice', () => {
-    return this.numParty * this.tour.price
-});
+// bookingSchema.virtual('totalPrice', () => {
+//     return this.numParty * this.tour.price
+// });
 
 
 const Booking = model('Booking', bookingSchema);

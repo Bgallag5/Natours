@@ -76,6 +76,12 @@ userSchema.virtual('reviews', {
   localField: '_id',
 });
 
+userSchema.virtual('bookings', {
+  ref: 'Booking',
+  foreignField: 'user',
+  localField: '_id',
+});
+
 //hash password
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {

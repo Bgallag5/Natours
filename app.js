@@ -13,18 +13,22 @@ const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+// const bookingRouter = require('./routes/bookingRoutes');
+
+
 
 const app = express();
 
-app.enable('trust proxy')
+app.enable('trust proxy');
 
 // 1) GLOBAL MIDDLEWARES
 // Set Security HTTP headers with helmet
 app.use(helmet());
-app.use(cookieParser())
+app.use(cookieParser());
 
 //allow http requests to server with cors 
 app.use(cors());
@@ -79,7 +83,6 @@ app.use(
 //Test Middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(':::::::::::REQ.USER:::::::::::::');
   console.log(req.user);
   next();
 });
@@ -88,6 +91,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+// app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

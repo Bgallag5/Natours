@@ -14,7 +14,7 @@ export default function Account() {
   const [modalState, toggleModalState] = useState(false);
   const [selectedReview, setSelectedReview] = useState('');
   const [reviewText, setReviewText] = useState('');
-  
+
   const handleClickReview = (review) => {
     setSelectedReview(review);
     setReviewText(review.review);
@@ -22,7 +22,7 @@ export default function Account() {
   };
 
   function handleModalChange() {
-    toggleModalState(prev => !prev);
+    toggleModalState((prev) => !prev);
     userViewRef.current.classList.toggle('is-blurred');
   }
 
@@ -37,23 +37,23 @@ export default function Account() {
     modalState,
     handleTextChange,
     handleModalChange,
-    toggleModalState
-  }
+    toggleModalState,
+  };
 
   return (
     <>
-    <div ref={userViewRef} className="user-view">
-      <nav className="user-view__menu">
-        <ul className="side-nav">
-          <li className={page === 'settings' ? 'side-nav--active' : ''}>
-            <label onClick={() => setPage('settings')}>
-              <i className="heading-box__icon">
-                <span className="material-icons">settings</span>
-              </i>
-              Settings
-            </label>
-          </li>
-          {/* <li>
+      <div ref={userViewRef} className="user-view">
+        <nav className="user-view__menu">
+          <ul className="side-nav">
+            <li className={page === 'settings' ? 'side-nav--active' : ''}>
+              <label onClick={() => setPage('settings')}>
+                <i className="heading-box__icon">
+                  <span className="material-icons">settings</span>
+                </i>
+                Settings
+              </label>
+            </li>
+            {/* <li>
               <label onClick={() => setPage('bookings')}>
                 <i className="heading-box__icon">
                   <span className="material-icons">settings</span>
@@ -61,22 +61,26 @@ export default function Account() {
                 My Bookings
               </label>
             </li> */}
-          <li className={page === 'reviews' ? 'side-nav--active' : ''}>
-            <label onClick={() => setPage('reviews')}>
-              <i className="heading-box__icon">
-                <span className="material-icons">settings</span>
-              </i>
-              My Reviews
-            </label>
-          </li>
-        </ul>
-      </nav>
-      <div className="user-view__content">
-        <Settings page={page} />
-        <Reviews page={page} userViewRef={userViewRef} handleClickReview={handleClickReview} />
+            <li className={page === 'reviews' ? 'side-nav--active' : ''}>
+              <label onClick={() => setPage('reviews')}>
+                <i className="heading-box__icon">
+                  <span className="material-icons">settings</span>
+                </i>
+                My Reviews
+              </label>
+            </li>
+          </ul>
+        </nav>
+        <div className="user-view__content">
+          <Settings page={page} />
+          <Reviews
+            page={page}
+            userViewRef={userViewRef}
+            handleClickReview={handleClickReview}
+          />
+        </div>
       </div>
-      </div>
-      <Modal props={modalProps}/>
-      </>
+      <Modal props={modalProps} />
+    </>
   );
 }

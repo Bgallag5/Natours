@@ -1,28 +1,15 @@
-import React, { useEffect } from 'react';
-
-import { calcNextStartDate } from '../../utils/helpers';
+import React from 'react';
 
 export default function TourInfo({ selectedTour }) {
   console.log(selectedTour);
 
   const {
     name,
-    _id,
     difficulty,
-    startLocation,
     ratingsAverage,
-    ratingsQuantity,
-    images,
-    startDates,
-    duration,
     guides,
-    price,
-    slug,
     maxGroupSize,
-    summary,
     description,
-    imageCover,
-    locations,
     nextStartDate,
   } = selectedTour;
 

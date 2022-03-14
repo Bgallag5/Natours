@@ -62,7 +62,7 @@ reviewSchema.pre(/^find/, function (next) {
 
 //statics are static methods we can add to schemas
 reviewSchema.statics.calcAverageRating = async function (tourId) {
-  //use aggregation pipeline to calcAverageRating on this tour
+  // use aggregation pipeline to calcAverageRating on this tour
   // match on tour - only aggregate reviews that match the id of the Tour we care about
   // group by _id (required); numRating = sum of documents (+1 per document); avgRating = avg of ratings
   const stats = await this.aggregate([
@@ -121,21 +121,7 @@ reviewSchema.post(/^findOneAnd/, async function () {
   //use constructor to access 'Review' model
   await this.doc.constructor.calcAverageRating(this.doc.tour);
 });
-//////////////////////////////////////////////////////////////////////
 
 const Review = model('Review', reviewSchema);
 
 module.exports = Review;
-
-//POST /tour/48y7tw02n/reviews
-//GET /tour/48y7tw02n/reviews
-//GET /tour/48y7tw02n/reviews/o9p47dns
-
-// stats in calcAverageRating returns:
-// [
-//   {
-//     _id: new ObjectId("61b1080c5176ad058545ad53"),
-//     numRating: 13,
-//     avgRating: 2.0923076923076924
-//   }
-// ]

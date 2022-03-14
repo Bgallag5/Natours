@@ -41,7 +41,7 @@ export default function Header() {
               Log Out
             </button>
             <Link className="nav__el nav__el--cta" to="/account">
-              Welcome {currentUser.name}
+            {currentUser.name}' s Page
             </Link>
           </>
         ) : (
@@ -57,24 +57,7 @@ export default function Header() {
             </Link>
           </>
         )}
-        {/* <a className="nav__el" href='/login'>Log In</a> */}
       </nav>
     </header>
   );
 }
-
-{
-  /* <Link
-  to={{
-    pathname: "/courses",
-    search: "?sort=name",
-    hash: "#the-hash",
-    state: { fromDashboard: true }
-  }}
-/> */
-}
-
-// pathname: A string representing the path to link to.
-// search: A string representation of query parameters.
-// hash: A hash to put in the URL, e.g. #a-hash.
-// state: State to persist to the location.
