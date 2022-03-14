@@ -28,7 +28,6 @@ export default function Login() {
           password,
         },
       });
-      console.log(res);
       if (res.data.status === 'success') {
         //route to overview page once logged in
         window.setTimeout(() => {
@@ -39,8 +38,6 @@ export default function Login() {
       console.log(err);
     }
   };
-
-  console.log(currentUser);
 
   return (
     <>

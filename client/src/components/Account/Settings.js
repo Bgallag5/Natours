@@ -21,7 +21,6 @@ export default function Settings({ page }) {
           email,
         },
       });
-      console.log(response);
       window.location.reload();
     }
   };
@@ -43,7 +42,6 @@ export default function Settings({ page }) {
           confirmNewPassword,
         },
       });
-      console.log(response);
     }
   };
 
@@ -54,7 +52,6 @@ export default function Settings({ page }) {
       method: 'POST',
       url: '/api/v1/users/uploadPhoto',
     });
-    console.log(response);
   };
 
   return (

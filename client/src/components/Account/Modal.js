@@ -23,7 +23,6 @@ export default function Modal({ props }) {
           review: reviewText,
         },
       });
-      console.log(res);
       if (res.statusText === 'OK') {
         //alert
         window.location.reload();
@@ -32,8 +31,6 @@ export default function Modal({ props }) {
       console.log(err);
     }
   }
-
-console.log(selectedReview);
   return (
     <div
       className="review-edit-modal"
@@ -44,7 +41,10 @@ console.log(selectedReview);
         <h2 className="heading-secondary ma-bt-md">
           {selectedReview && selectedReview.tour.name}
         </h2>
-        <h3>Review written on: {new Date(selectedReview.createdAt).toLocaleDateString()}</h3>
+        <h3>
+          Review written on:{' '}
+          {new Date(selectedReview.createdAt).toLocaleDateString()}
+        </h3>
         <label className="form__label">My Review:</label>
         <textarea
           id="review-text-edit"
@@ -60,10 +60,7 @@ console.log(selectedReview);
       >
         Close
       </button>
-      <button
-        onClick={(e) => handleReviewSubmit(e)}
-        className="btn btn--green"
-      >
+      <button onClick={(e) => handleReviewSubmit(e)} className="btn btn--green">
         Save Review
       </button>
     </div>

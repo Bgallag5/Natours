@@ -37,7 +37,6 @@ function App() {
           method: 'GET',
           url: 'http://localhost:3000/api/v1/users/me',
         });
-        console.log(res);
         if (res.statusText === 'OK') {
           setCurrentUser(res.data.data.data);
         }
@@ -47,9 +46,6 @@ function App() {
     }
     fetchData();
   }, []);
-
-  console.log(selectedTour);
-  console.log(currentUser);
 
   return (
     <GlobalContext.Provider value={globalVars}>

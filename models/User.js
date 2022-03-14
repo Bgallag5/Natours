@@ -111,7 +111,6 @@ userSchema.pre(/^find/, function (next) {
 
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
-  // console.log(password, this.password);
   return await bcrypt.compare(password, this.password);
 };
 
@@ -123,7 +122,6 @@ userSchema.methods.changedPasswordAfter = function (JWTtimestamp) {
       this.passwordChangedAt.getTime() / 1000,
       10
     );
-    console.log(changedTimestamp, JWTtimestamp);
     //return true if changedTimestamp is greater (more recent) than JWTtimestamp
     return JWTtimestamp < changedTimestamp;
   }

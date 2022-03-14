@@ -11,15 +11,12 @@ export default function TourReviews({ selectedTour }) {
     const response = await axios.get(
       `/api/v1/tours/${selectedTour._id}/reviews`
     );
-    console.log('SETTING REVIEWS');
     setReviews(response.data.data.document);
   }, [selectedTour]);
 
   useEffect(() => {
     getReviewData();
   }, [getReviewData]);
-
-  console.log(reviews);
 
   if (reviews) {
     calcStars(reviews);

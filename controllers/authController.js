@@ -14,8 +14,6 @@ const signToken = (id) => {
 };
 
 const createSendToken = (user, statusCode, req, res) => {
-  console.log('CREATESENDTOKEN--USER');
-  console.log(user);
   const token = signToken(user._id);
 
   const cookieOptions = {
@@ -66,8 +64,6 @@ exports.login = catchAsync(async (req, res, next) => {
   // include the password
   const user = await User.findOne({ email }).select('+password');
   const correctPassword = await user.isCorrectPassword(password);
-  console.log(user);
-  console.log(correctPassword);
   if (!user) return next(new AppError('Invalid Credentials', 401));
   if (!correctPassword) return next(new AppError('Invalid Credentials', 401));
 
@@ -87,8 +83,6 @@ exports.logout = catchAsync(async (req, res, next) => {
 
 // AUTH Middleware - check the user is logged in
 exports.auth = catchAsync(async (req, res, next) => {
-  console.log('COOKIES:::::::::');
-  console.log(req.cookies);
   let token;
   // CHECK FOR TOKEN
   if (

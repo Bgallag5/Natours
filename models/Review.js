@@ -75,7 +75,6 @@ reviewSchema.statics.calcAverageRating = async function (tourId) {
       },
     },
   ]);
-  console.log(stats);
   //check if the tour has any ratings; only need to find and update if we have stats to add
   if (stats.length > 0) {
     await Tour.findByIdAndUpdate(

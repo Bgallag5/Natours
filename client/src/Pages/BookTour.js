@@ -19,10 +19,8 @@ export default function BookTour() {
           slug: tourSlug,
         },
       });
-      console.log(res);
       if (res.status === 200) {
         // showAlert('success', 'Logged in successfully!');
-        console.log(res.data.data.document[0]);
         setCurrentTour(res.data.data.document[0])
       }
     } catch (err) {
@@ -32,7 +30,6 @@ export default function BookTour() {
 
   const handleBookSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target);
     try {
        const res = await axios({
          method: 'POST',

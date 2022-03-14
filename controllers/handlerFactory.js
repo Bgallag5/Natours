@@ -67,7 +67,6 @@ exports.getAll = (Model) =>
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     if (req.body.password) req.body.password = undefined;
-    // console.log(req.body.password);
 
     const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

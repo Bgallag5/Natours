@@ -3,7 +3,6 @@ import React from 'react';
 export default function TourHero({selectedTour}) {
 
   const {type, coordinate, address, description} = selectedTour.startLocation;
-  console.log(selectedTour);
 
   return (
     <section className="section-header">

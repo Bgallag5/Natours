@@ -1,5 +1,4 @@
 export const calcNextStartDate = (datesArr) => {
-  // console.log(datesArr);
   let nextTour;
   let today = new Date(Date.now());
   //loop over startDates and return the next most upcoming date

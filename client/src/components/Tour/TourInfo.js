@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function TourInfo({ selectedTour }) {
-  console.log(selectedTour);
 
   const {
     name,
@@ -55,7 +54,6 @@ export default function TourInfo({ selectedTour }) {
 
             {guides &&
               guides.map((guide) => {
-                  console.log(guide);
                 return (
                   <div key={guide.id} className="overview-box__detail">
                     <img
