@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {  useEffect, useContext } from 'react';
 import TourCard from '../components/Tour/TourCard';
 
 import axios from 'axios';
 import { GlobalContext } from '../App';
 
 export default function Overview() {
-  const { tours, setTours, currentUser } = useContext(GlobalContext);
+  const { tours, setTours,  } = useContext(GlobalContext);
 
   const getTourData = async () => {
-    const data = await axios.get('http://localhost:3001/api/v1/tours');
+    const data = await axios.get('/api/v1/tours');
     return data;
   };
 

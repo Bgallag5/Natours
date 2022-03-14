@@ -14,7 +14,7 @@ export default function BookTour() {
     try {
       const res = await axios({
         method: 'GET',
-        url: `http://localhost:3001/api/v1/tours`,
+        url: `/api/v1/tours`,
         params: {
           slug: tourSlug,
         },
@@ -33,7 +33,7 @@ export default function BookTour() {
     try {
        const res = await axios({
          method: 'POST',
-         url: `http://localhost:3001/api/v1/bookings`,
+         url: `/api/v1/bookings`,
          data: {
           //  email
           //  price

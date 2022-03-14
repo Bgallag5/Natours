@@ -16,7 +16,7 @@ export default function TourDetails() {
 
   const getDetails = async () => {
     const currentSlug = window.location.href.split('/').pop();
-    const currentTour = await axios.get(`http://localhost:3001/api/v1/tours`, {
+    const currentTour = await axios.get(`/api/v1/tours`, {
       params: { slug: currentSlug },
     }); // /${id}
     currentTour.data.data.document[0].nextStartDate = calcNextStartDate(

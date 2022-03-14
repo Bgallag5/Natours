@@ -35,7 +35,7 @@ function App() {
       try {
         const res = await axios({
           method: 'GET',
-          url: 'http://localhost:3000/api/v1/users/me',
+          url: '/api/v1/users/me',
         });
         if (res.statusText === 'OK') {
           setCurrentUser(res.data.data.data);
