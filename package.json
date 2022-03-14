@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"nodemon server.js\" \"cd client && npm start\"",
-    "start:prod": "NODE_ENV=production node server.js"
+    "start:prod": "NODE_ENV=production node server.js",
+    "build": "cd client && npm run build"
   },
   "author": "",
   "license": "ISC",

@@ -37,6 +37,7 @@ function App() {
           method: 'GET',
           url: '/api/v1/users/me',
         });
+        console.log(res);
         if (res.statusText === 'OK') {
           setCurrentUser(res.data.data.data);
         }
@@ -46,6 +47,7 @@ function App() {
     }
     fetchData();
   }, []);
+
 
   return (
     <GlobalContext.Provider value={globalVars}>

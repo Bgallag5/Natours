@@ -14,6 +14,8 @@ export default function Overview() {
 
   useEffect(() => {
     getTourData().then((res) => {
+      console.log('GETTING TOUR DATA');
+      console.log(res);
       setTours(res.data.data.document);
     });
   }, []);
