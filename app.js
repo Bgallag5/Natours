@@ -15,8 +15,8 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 const tourRouter = require('./routes/api/tourRoutes');
-const userRouter = require('./routes/userRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
+const userRouter = require('./routes/api/userRoutes');
+const reviewRouter = require('./routes/api/reviewRoutes');
 const reactRouter = require('./routes/index');
 
 
