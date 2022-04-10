@@ -86,7 +86,7 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.use('/', path.join(__dirname, '../client/build/index.html'));
+app.use('/', path.join(__dirname, '../client/build'));
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
