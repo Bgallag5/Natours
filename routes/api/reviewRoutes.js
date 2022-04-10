@@ -1,7 +1,7 @@
 // routes for getting Reviews, creating new reviews
 const express = require('express');
-const authController = require('../controllers/authController');
-const reviewController = require('../controllers/reviewController');
+const authController = require('../../controllers/authController');
+const reviewController = require('../../controllers/reviewController');
 
 // (POST /tour/:tourId/reviews) - mergeParams gives access to the params being sent in from tourRoutes
 const router = express.Router({ mergeParams: true });
