@@ -31,7 +31,7 @@ app.use(cookieParser());
 
 //allow http requests to server with cors 
 app.use(cors());
-app.options('*', cors());
+app.options('/*', cors());
 
 
 //Development logging
@@ -77,6 +77,7 @@ app.use(
   })
 );
 
+app.use(globalErrorHandler);
 
 //Test Middleware
 app.use((req, res, next) => {
@@ -101,6 +102,5 @@ app.all('*', (req, res, next) => {
   // next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
-app.use(globalErrorHandler);
 
 module.exports = app;
