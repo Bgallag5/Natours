@@ -17,6 +17,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/api/tourRoutes');
 const userRouter = require('./routes/api/userRoutes');
 const reviewRouter = require('./routes/api/reviewRoutes');
+const reactRouter = require('./routes/index');
 
 
 const app = express();
@@ -77,7 +78,6 @@ app.use(
 );
 
 
-
 //Test Middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
@@ -94,6 +94,7 @@ app.use('/api/v1/reviews', reviewRouter);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
+
 
 app.all('*', (req, res, next) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
