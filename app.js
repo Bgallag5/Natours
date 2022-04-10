@@ -98,6 +98,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.all('*', (req, res, next) => {
   // res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
