@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
-import { calcStars } from '../../utils/helpers';
+// import { calcStars } from '../../utils/helpers';
 
 export default function TourReviews({ selectedTour }) {
   const [reviews, setReviews] = useState('');
@@ -19,7 +19,7 @@ export default function TourReviews({ selectedTour }) {
   }, [getReviewData]);
 
   if (reviews) {
-    calcStars(reviews);
+    // calcStars(reviews);
   }
 
   return (
@@ -42,7 +42,7 @@ export default function TourReviews({ selectedTour }) {
                   <h6 className="reviews__user">{review.user.name}</h6>
                 </div>
                 <p className="reviews__text">{review.review}</p>
-                <div className="reviews__rating">
+                {/* <div className="reviews__rating">
                   {review.numberStars.map((star) => {
                     return (
                       <i
@@ -53,7 +53,7 @@ export default function TourReviews({ selectedTour }) {
                       </i>
                     );
                   })}
-                </div>
+                </div> */}
               </div>
             );
           })}
