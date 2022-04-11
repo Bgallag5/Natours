@@ -9,7 +9,7 @@ export default function TourInfo({ selectedTour }) {
     guides,
     maxGroupSize,
     description,
-    nextStartDate,
+    // nextStartDate,
   } = selectedTour;
 
   return (
@@ -24,7 +24,7 @@ export default function TourInfo({ selectedTour }) {
               </i>
               <span className="overview-box__label">Next Date</span>
               <span className="overview-box__text">
-                {nextStartDate[1]} {nextStartDate[3]}{' '}
+                {/* {nextStartDate[1]} {nextStartDate[3]}{' '} */}
               </span>
             </div>
             <div className="overview-box__detail">

@@ -5,7 +5,7 @@ import TourInfo from '../components/Tour/TourInfo';
 import TourPhotos from '../components/Tour/TourPhotos';
 import TourReviews from '../components/Tour/TourReviews';
 
-import { calcNextStartDate } from '../utils/helpers';
+// import { calcNextStartDate } from '../utils/helpers';
 
 import { GlobalContext } from '../App';
 import axios from 'axios';
@@ -18,9 +18,9 @@ export default function TourDetails() {
     const currentTour = await axios.get(`/api/v1/tours`, {
       params: { slug: currentSlug },
     }); // /${id}
-    currentTour.data.data.document[0].nextStartDate = calcNextStartDate(
-      currentTour.data.data.document[0].startDates
-    );
+    // currentTour.data.data.document[0].nextStartDate = calcNextStartDate(
+    //   currentTour.data.data.document[0].startDates
+    // );
     setSelectedTour({ ...currentTour.data.data.document[0] });
   };
 
