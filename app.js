@@ -29,9 +29,9 @@ app.enable('trust proxy');
 // app.use(helmet());
 // app.use(cookieParser());
 
-// //allow http requests to server with cors 
-// app.use(cors());
-// app.options('*', cors());
+//allow http requests to server with cors 
+app.use(cors());
+app.options('*', cors());
 
 //serving static files
 app.use(express.static(path.join(__dirname, "public")));
