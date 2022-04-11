@@ -28,7 +28,9 @@ export default function SignUp() {
           passwordConfirm,
         },
       });
+      console.log(res);
     } catch (err) {
+      console.log(err);
       throw new Error(err.message);
     }
   };
