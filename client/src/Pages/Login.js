@@ -32,7 +32,7 @@ export default function Login() {
         //route to overview page once logged in
         window.setTimeout(() => {
           window.location.assign('/');
-        }, 2000);
+        }, 1000);
       }
     } catch (err) {
       console.log(err);

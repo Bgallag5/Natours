@@ -28,9 +28,14 @@ export default function SignUp() {
           passwordConfirm,
         },
       });
-      console.log(res);
+      //on success, route to homepage
+      if (res.data.status === 'success') {
+        //route to overview page once logged in
+        window.setTimeout(() => {
+          window.location.assign('/');
+        }, 1000);
+      }
     } catch (err) {
-      console.log(err);
       throw new Error(err.message);
     }
   };
