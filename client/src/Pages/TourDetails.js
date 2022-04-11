@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import TourHero from '../components/Tour/TourHero';
 import TourInfo from '../components/Tour/TourInfo';
