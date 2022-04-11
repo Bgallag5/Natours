@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../App';
 
-import { calcStars } from '../../utils/helpers';
+// import { calcStars } from '../../utils/helpers';
 
 export default function Reviews({ page, userViewRef, handleClickReview }) {
   const { currentUser } = useContext(GlobalContext);
 
   // calcStars if we have a user
-  currentUser && calcStars(currentUser.reviews);
+  // currentUser && calcStars(currentUser.reviews);
 
   return (
     <div style={{ display: page === 'reviews' ? 'block' : 'none' }}>
@@ -26,7 +26,7 @@ export default function Reviews({ page, userViewRef, handleClickReview }) {
                     <h6 className="reviews__user">{review.user.name}</h6>
                   </div>
                   <p className="reviews__text">{review.review}</p>
-                  <div className="reviews__rating">
+                  {/* <div className="reviews__rating">
                     {review.numberStars.map((star) => {
                       return (
                         <i
@@ -37,7 +37,7 @@ export default function Reviews({ page, userViewRef, handleClickReview }) {
                         </i>
                       );
                     })}
-                  </div>
+                  </div> */}
                 </div>
               );
             })}
