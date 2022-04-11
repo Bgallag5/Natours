@@ -24,10 +24,10 @@ const app = express();
 
 app.enable('trust proxy');
 
-// // 1) GLOBAL MIDDLEWARES
-// // Set Security HTTP headers with helmet
-// app.use(helmet());
-// app.use(cookieParser());
+// 1) GLOBAL MIDDLEWARES
+// Set Security HTTP headers with helmet
+app.use(helmet());
+app.use(cookieParser());
 
 //allow http requests to server with cors 
 app.use(cors());
@@ -42,40 +42,40 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// //Limit to 100 requests from same IP in 1 hour
-// const limiter = rateLimit({
-//   max: 100,
-//   windowMs: 60 * 60 * 1000,
-//   message: 'You have made too many requests to this API in too short a time 🤯',
-// });
-// // limit requests on all api routes
-// app.use('/api', limiter);
+//Limit to 100 requests from same IP in 1 hour
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'You have made too many requests to this API in too short a time 🤯',
+});
+// limit requests on all api routes
+app.use('/api', limiter);
 
 //Body parser - reads data from body into req.body - limit body to 10kilobytes
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-// // Data Sanitization against NoSQL query injections
-// // checks req.query, req.params, req.body and filter out any symbols ($, .)
-// app.use(mongoSanitize());
+// Data Sanitization against NoSQL query injections
+// checks req.query, req.params, req.body and filter out any symbols ($, .)
+app.use(mongoSanitize());
 
-// // Data Sanitization against XSS (Cross side scripting attacks)
-// // cleans user input from malicious HTML code
-// app.use(xss());
+// Data Sanitization against XSS (Cross side scripting attacks)
+// cleans user input from malicious HTML code
+app.use(xss());
 
-// //Prevent Parameter Pollution
-// app.use(
-//   hpp({
-//     whitelist: [
-//       'duration',
-//       'ratingsQuantity',
-//       'ratingsAverage',
-//       'maxGroupSize',
-//       'difficulty',
-//       'price',
-//     ],
-//   })
-// );
+//Prevent Parameter Pollution
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  })
+);
 
 
 // //Test Middleware
