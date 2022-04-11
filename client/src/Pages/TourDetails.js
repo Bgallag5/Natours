@@ -5,27 +5,13 @@ import TourInfo from "../components/Tour/TourInfo";
 import TourPhotos from "../components/Tour/TourPhotos";
 import TourReviews from "../components/Tour/TourReviews";
 
-// import { calcNextStartDate } from '../utils/helpers';
-
 import { GlobalContext } from "../App";
 import axios from "axios";
 
 export default function TourDetails() {
-  const { selectedTour, setSelectedTour } = useContext(GlobalContext);
+  const { selectedTour, setSelectedTour, calcNextStartDate } = useContext(GlobalContext);
 
-  const calcNextStartDate = (datesArr) => {
-    let nextTour;
-    let today = new Date(Date.now());
-    //loop over startDates and return the next most upcoming date
-    for (let i = 0; i < datesArr.length; i++) {
-      let date = new Date(datesArr[i]);
-      if (today < date) {
-        nextTour = date.toDateString().split(" ");
-        return nextTour;
-      }
-    }
-    return (nextTour = "No Tours Scheduled");
-  };
+
 
   const getDetails = async () => {
     const currentSlug = window.location.href.split("/").pop();

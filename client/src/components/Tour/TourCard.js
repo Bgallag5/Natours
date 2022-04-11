@@ -1,8 +1,9 @@
-import React from 'react';
-
-// import { calcNextStartDate } from '../../utils/helpers';
+import React, {useContext} from 'react';
+import { GlobalContext } from '../../App';
 
 export default function TourCard({ tour }) {
+  const {calcNextStartDate} = useContext(GlobalContext);
+
   const {
     name,
     _id,
@@ -23,7 +24,7 @@ export default function TourCard({ tour }) {
     locations,
   } = tour;
 
-  // const nextTour = calcNextStartDate(startDates);
+  const nextTour = calcNextStartDate(startDates);
 
   return (
     <div className="card">
@@ -60,7 +61,7 @@ export default function TourCard({ tour }) {
             <span>{'No tours planned'}</span>
           ) : (
             <span>
-              {/* {nextTour[1]} {nextTour[3]}{' '} */}
+              {nextTour[1]} {nextTour[3]}{' '}
             </span>
           )}
         </div>
