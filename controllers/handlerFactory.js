@@ -43,9 +43,9 @@ exports.getOne = (Model, options) =>
 //get all documents
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
+    let filter = {};
     // if a tourId was passed in, search for reviews only on that tour
     // filter and tourId only apply for reviews
-    let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
