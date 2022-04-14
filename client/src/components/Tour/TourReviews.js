@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 
-// import { calcStars } from '../../utils/helpers';
 
 export default function TourReviews({ selectedTour }) {
   const [reviews, setReviews] = useState("");
@@ -10,10 +9,15 @@ export default function TourReviews({ selectedTour }) {
 
   //axios request get reviews
   const getReviewData = useCallback(async () => {
-    const response = await axios.get(
-      `/api/v1/tours/${selectedTour._id}/reviews`
-    );
-    setReviews(response.data.data.document);
+    try {
+      const response = await axios.get(
+        `/api/v1/tours/${selectedTour._id}/reviews`
+      );
+      console.log(response);   
+      setReviews(response.data.data.document);
+    } catch (err) {
+      console.log(err);
+    }
   }, [selectedTour]);
 
   //call getReviewData when its callback triggers
@@ -32,7 +36,7 @@ export default function TourReviews({ selectedTour }) {
     return reviewArr;
   };
 
-  //build array of stars based on rating 
+  //build array of stars based on rating
   const createStars = () => {
     reviews.forEach((review) => {
       let num = Math.round(review.rating);
@@ -110,9 +114,7 @@ export default function TourReviews({ selectedTour }) {
               >
                 <div className="stars__container">
                   {review.stars.map((star, i) => {
-                    return (
-                        star
-                    );
+                    return star;
                   })}
                 </div>
                 <div className="testimonial">
