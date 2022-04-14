@@ -6,6 +6,12 @@ export default function TourReviews({ selectedTour }) {
   const [reviews, setReviews] = useState("");
   //current slide ref
   const currentSlide = useRef(0);
+  const currentDot = useRef(0);
+
+  //always set current dot to current slide
+  useEffect(() => {
+    currentDot.current = currentSlide.current; 
+  })
 
   //axios request get reviews
   const getReviewData = useCallback(async () => {
@@ -73,7 +79,7 @@ export default function TourReviews({ selectedTour }) {
   const buildSliderFunctionality = () => {
     const slides = document.querySelectorAll(".slide");
     const buttons = document.querySelectorAll(".slider__btn");
-    // console.log(slides);
+    const dotContainer = document.querySelector('.dots')
 
     //position slides with TransformX
     const positionSlides = function () {
@@ -84,6 +90,31 @@ export default function TourReviews({ selectedTour }) {
       });
     };
     positionSlides();
+
+    const handleDotClick = function(){
+      console.log(this.dataset.slide);
+      currentDot.current = this.dataset.slide;
+      currentSlide.current = Number(this.dataset.slide);
+      positionSlides();
+      createDots();
+    }
+
+    const createDots = function () {
+      //clear dots html
+      dotContainer.innerHTML = '';
+      slides.forEach(function (slide, i) {
+        console.log(currentSlide.current);
+        console.log(currentSlide.current === i);
+        dotContainer.insertAdjacentHTML(
+          'beforeend',
+          `<button class="dots__dot ${currentSlide.current === i ? 'dots__dot--active' : ''}" data-slide="${i}"></button>`
+        );
+      });
+      dotContainer.querySelectorAll('.dots__dot').forEach(dot => dot.addEventListener('click', handleDotClick))
+    };
+
+    createDots()
+
     buttons?.forEach((button) => {
       button.addEventListener("click", (e) => {
         //set currentSlide ref
@@ -98,6 +129,7 @@ export default function TourReviews({ selectedTour }) {
         }
         currentSlide.current = currentSlide.current + offset;
         positionSlides();
+        createDots();
       });
     });
   };
@@ -149,69 +181,10 @@ export default function TourReviews({ selectedTour }) {
         >
           &rarr;
         </button>
-        <div className="dots"></div>
+        <div className="dots">
+        </div>
       </div>
     </section>
   );
 }
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <div className="slider">
-<div className="slide slide--1">
-  <div className="testimonial">
-    <h5 className="testimonial__header">Best financial decision ever!</h5>
-    <blockquote className="testimonial__text">
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-      Accusantium quas quisquam non? Quas voluptate nulla minima
-      deleniti optio ullam nesciunt, numquam corporis et asperiores
-      laboriosam sunt, praesentium suscipit blanditiis. Necessitatibus
-      id alias reiciendis, perferendis facere pariatur dolore veniam
-      autem esse non voluptatem saepe provident nihil molestiae.
-    </blockquote>
-    <address className="testimonial__author">
-      <img src={require("../img/user-1.jpg")} alt="" className="testimonial__photo" />
-      <h6 className="testimonial__name">Aarav Lynn</h6>
-      <p className="testimonial__location">San Francisco, USA</p>
-    </address>
-  </div>
-</div> */
-}
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <div className="reviews">
-        {reviews &&
-          reviews.map((review) => {
-            return (
-              <div key={review.id} className="reviews__card">
-                <div className="reviews__avatar">
-                  <img
-                    className="reviews__avatar-img"
-                    src={
-                      review.user.photo
-                        ? `/img/users/${review.user.photo}`
-                        : '/img/users/default.jpg'
-                    }
-                    alt={review.user.name}
-                  />
-                  <h6 className="reviews__user">{review.user.name}</h6>
-                </div>
-                <p className="reviews__text">{review.review}</p>
-                <div className="reviews__rating">
-                  {review.numberStars.map((star) => {
-                    return (
-                      <i
-                        key={Math.random() * 100}
-                        className="reviews__star reviews__star--active"
-                      >
-                        <span className="material-icons">star</span>
-                      </i>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-      </div> */
-}
