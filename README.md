@@ -27,11 +27,9 @@ $ npm start
 ```
 
 ### Heroku Link
-[Natours](https://pocket-trader.herokuapp.com/)
+[Natours](https://bg-natours.herokuapp.com/)
 
 ### Images
-
-[Natours App Demo](https://user-images.githubusercontent.com/72705457/139108878-32bfa300-840d-4253-9dae-ae3358b84c2f.mp4)
 
 
 ### Technology Used
