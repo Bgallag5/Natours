@@ -31,6 +31,7 @@ $ npm start
 
 ### Images
 
+<img width="1390" alt="natours--img" src="https://user-images.githubusercontent.com/82895658/163600648-e8369bea-c37c-4f9c-a404-5504f1e09590.png">
 
 ### Technology Used
 * React
