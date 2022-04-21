@@ -1,12 +1,16 @@
 /* eslint-disable no-lone-blocks */
 import axios from 'axios';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { LOGOUT_USER } from '../GlobalStore/actions';
 
-import { GlobalContext } from '../App';
+// import { GlobalContext } from '../App';
+// import { useStoreContext } from '../GlobalStore/GlobalStore';
+import { useStoreContext } from '../GlobalStore/GlobalStore';
 
 export default function Header() {
-  const { tours, currentUser } = useContext(GlobalContext);
+  const [state, dispatch]  = useStoreContext();
+  console.log(state);
 
   const handleLogout = async () => {
     try {
@@ -15,6 +19,7 @@ export default function Header() {
         url: '/api/v1/users/logout',
       });
       console.log(response);
+      dispatch({type: LOGOUT_USER})
       window.location.assign('/')
     } catch (err) {
       console.log(err);
@@ -32,7 +37,7 @@ export default function Header() {
         <img src="/img/logo-white.png" alt="white logo"></img>
       </div>
       <nav className="nav nav--user">
-        {currentUser ? (
+        {state.currentUser ? (
           <>
             <button
               className="nav__el"
@@ -41,14 +46,14 @@ export default function Header() {
               Log Out
             </button>
             <Link className="nav__el nav__el--cta" to="/account">
-            {currentUser.name}' s Page
+            {state.currentUser.name}' s Page
             </Link>
           </>
         ) : (
           <>
             <Link
               className="nav__el"
-              to={{ pathname: './login', state: { tours } }}
+              to={{ pathname: '/login'}}
             >
               Log In
             </Link>

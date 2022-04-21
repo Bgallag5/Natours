@@ -14,59 +14,38 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./css/main.css";
 import axios from "axios";
 
+import { useStoreContext } from "./GlobalStore/GlobalStore";
+import { LOGIN_USER } from "./GlobalStore/actions";
+
+
 export const GlobalContext = React.createContext();
 
 function App() {
-  const [currentUser, setCurrentUser] = useState("");
-  const [tours, setTours] = useState([]);
-  const [selectedTour, setSelectedTour] = useState("");
+  const [state, dispatch] = useStoreContext();
+  console.log(state);
 
-
-  //on App load fetch /me and set to currentUser
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axios({
-          method: "GET",
-          url: "/api/v1/users/me",
-        });
-        console.log(res);
-        if (res.statusText === "OK") {
-          setCurrentUser(res.data.data.data);
+    //on App load fetch /me and set to currentUser
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const res = await axios({
+            method: "GET",
+            url: "/api/v1/users/me",
+          });
+          console.log(res);
+          if (res.statusText === "OK") {
+            // setCurrentUser(res.data.data.data);
+            dispatch({type: LOGIN_USER, payload: res.data.data.data})
+          }
+        } catch (err) {
+          console.log(err);
         }
-      } catch (err) {
-        console.log(err);
       }
-    }
-    fetchData();
-  }, []);
+      fetchData();
+    }, []);
 
-  const calcNextStartDate = (datesArr) => {
-    let nextTour;
-    let today = new Date(Date.now());
-    //loop over startDates and return the next most upcoming date
-    for (let i = 0; i < datesArr.length; i++) {
-      let date = new Date(datesArr[i]);
-      if (today < date) {
-        nextTour = date.toDateString().split(" ");
-        return nextTour;
-      }
-    }
-    return (nextTour = "No Tours Scheduled");
-  };
-
-
-  const globalVars = {
-    currentUser,
-    setCurrentUser,
-    selectedTour,
-    setSelectedTour,
-    tours,
-    setTours,
-    calcNextStartDate
-  };
   return (
-    <GlobalContext.Provider value={globalVars}>
+    <div>
       <Router>
         <Header />
         <main className="main">
@@ -81,7 +60,7 @@ function App() {
         </main>
         <Footer />
       </Router>
-    </GlobalContext.Provider>
+    </div>
   );
 }
 

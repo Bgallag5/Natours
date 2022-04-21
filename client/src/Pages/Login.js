@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { GlobalContext } from '../App';
+import { useStoreContext } from '../GlobalStore/GlobalStore';
+import { LOGIN_USER } from '../GlobalStore/actions';
 
 export default function Login() {
   const [formState, setFormState] = useState({
@@ -9,7 +12,8 @@ export default function Login() {
     password: '',
   });
 
-  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const [state, dispatch] = useStoreContext();
+  const navigate = useNavigate();
 
   const handleFormChange = (e) => {
     setFormState({ ...formState, [e.target.id]: e.target.value });
@@ -28,11 +32,12 @@ export default function Login() {
           password,
         },
       });
+      console.log(res);
       if (res.data.status === 'success') {
         //route to overview page once logged in
-        window.setTimeout(() => {
-          window.location.assign('/');
-        }, 1000);
+        dispatch({type: LOGIN_USER, payload: res.data.data.user})
+        // navigate back to overview page
+        navigate('/')
       }
     } catch (err) {
       console.log(err);

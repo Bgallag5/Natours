@@ -3,9 +3,9 @@ import { GlobalContext } from '../../App';
 
 import axios from 'axios';
 
-export default function Settings({ page }) {
-  const { currentUser } = useContext(GlobalContext);
+export default function Settings({currentUser, page}) {
 
+console.log(currentUser);
   const handleEditProfile = async (e) => {
     e.preventDefault();
     let name = document.querySelector('#name').value;

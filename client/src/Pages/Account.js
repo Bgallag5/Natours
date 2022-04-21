@@ -1,12 +1,15 @@
-import React, { useState, useRef, useContext } from 'react';
-import { GlobalContext } from '../App';
+import React, { useState, useRef } from 'react';
+// import { GlobalContext } from '../App';
 
 import Settings from '../components/Account/Settings';
 import Reviews from '../components/Account/Reviews';
 import Modal from '../components/Account/Modal';
 
+import { useStoreContext } from '../GlobalStore/GlobalStore';
+
 export default function Account() {
-  const { currentUser } = useContext(GlobalContext);
+  const [state, dispatch] = useStoreContext();
+  const {currentUser} = state;
   const [page, setPage] = useState('settings');
 
   const userViewRef = useRef();
@@ -72,9 +75,10 @@ export default function Account() {
           </ul>
         </nav>
         <div className="user-view__content">
-          <Settings page={page} />
+          <Settings page={page} currentUser={currentUser} />
           <Reviews
             page={page}
+            currentUser={currentUser}
             userViewRef={userViewRef}
             handleClickReview={handleClickReview}
           />

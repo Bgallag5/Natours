@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useStoreContext } from '../GlobalStore/GlobalStore';
+import { SIGNUP_USER } from '../GlobalStore/actions';
+import { useNavigate } from 'react-router-dom'
 
 export default function SignUp() {
+  const [state, dispatch] = useStoreContext();
+  //react useNavigate hook - navigate between React-Router routes without state refresh 
+  let navigate = useNavigate();
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -31,9 +37,9 @@ export default function SignUp() {
       //on success, route to homepage
       if (res.data.status === 'success') {
         //route to overview page once logged in
-        window.setTimeout(() => {
-          window.location.assign('/');
-        }, 1000);
+        dispatch({type: SIGNUP_USER, payload: res.data.data.user});
+        //back to home after signup
+        navigate('/')
       }
     } catch (err) {
       throw new Error(err.message);

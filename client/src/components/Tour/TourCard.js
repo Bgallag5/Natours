@@ -1,8 +1,12 @@
 import React, {useContext} from 'react';
 import { GlobalContext } from '../../App';
+// import { calcNextStartDate } from '../../App';
+import { calcNextStartDate } from '../../utils/helpers';
 
+import { useStoreContext } from '../../GlobalStore/GlobalStore';
 export default function TourCard({ tour }) {
-  const {calcNextStartDate} = useContext(GlobalContext);
+  // const {calcNextStartDate} = useContext(GlobalContext);
+  const [state, dispatch] = useStoreContext();
 
   const {
     name,

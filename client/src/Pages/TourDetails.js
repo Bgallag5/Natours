@@ -4,12 +4,17 @@ import TourHero from "../components/Tour/TourHero";
 import TourInfo from "../components/Tour/TourInfo";
 import TourPhotos from "../components/Tour/TourPhotos";
 import TourReviews from "../components/Tour/TourReviews";
+import { calcNextStartDate } from "../utils/helpers";
 
-import { GlobalContext } from "../App";
+// import { GlobalContext } from "../App";
+import { useStoreContext } from "../GlobalStore/GlobalStore";
+import { SET_SELECTED_TOUR } from "../GlobalStore/actions";
 import axios from "axios";
 
 export default function TourDetails() {
-  const { selectedTour, setSelectedTour, calcNextStartDate } = useContext(GlobalContext);
+  // const { selectedTour, setSelectedTour, calcNextStartDate } = useContext(GlobalContext);
+
+  const [{selectedTour}, dispatch] = useStoreContext()
 
 
 
@@ -18,10 +23,11 @@ export default function TourDetails() {
     const currentTour = await axios.get(`/api/v1/tours`, {
       params: { slug: currentSlug },
     }); // /${id}
-    currentTour.data.data.document[0].nextStartDate = calcNextStartDate(
-      currentTour.data.data.document[0].startDates
-    );
-    setSelectedTour({ ...currentTour.data.data.document[0] });
+    // currentTour.data.data.document[0].nextStartDate = calcNextStartDate(
+    //   currentTour.data.data.document[0].startDates
+    // );
+    // setSelectedTour({ ...currentTour.data.data.document[0] });
+    dispatch({type: SET_SELECTED_TOUR, payload: currentTour.data.data.document[0]})
   };
 
   useEffect(() => {

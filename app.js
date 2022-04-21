@@ -85,7 +85,6 @@ app.use(
 // });
 
 // 3) ROUTES
-// app.use('/', path.join(__dirname, '../client/build/index/html'));
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);

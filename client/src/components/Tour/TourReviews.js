@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-
+import { useStoreContext } from "../../GlobalStore/GlobalStore";
+import {SET_REVIEWS } from "../../GlobalStore/actions";
 
 export default function TourReviews({ selectedTour }) {
-  const [reviews, setReviews] = useState("");
-  //current slide ref
+  // const [reviews, setReviews] = useState("");
+  const [{reviews}, dispatch] = useStoreContext();
+  //reference to the current slide 
   const currentSlide = useRef(0);
   const currentDot = useRef(0);
 
@@ -20,7 +22,8 @@ export default function TourReviews({ selectedTour }) {
         `/api/v1/tours/${selectedTour._id}/reviews`
       );
       console.log(response);   
-      setReviews(response.data.data.document);
+      // setReviews(response.data.data.document);
+      dispatch({type: SET_REVIEWS, payload: response.data.data.document})
     } catch (err) {
       console.log(err);
     }
@@ -30,17 +33,6 @@ export default function TourReviews({ selectedTour }) {
   useEffect(() => {
     getReviewData();
   }, [getReviewData]);
-
-  const calcStars = (reviewArr) => {
-    reviewArr.forEach((review) => {
-      let num = Math.round(review.rating);
-      review.numberStars = [];
-      for (let i = 0; i < num; i++) {
-        review.numberStars.push("star");
-      }
-    });
-    return reviewArr;
-  };
 
   //build array of stars based on rating
   const createStars = () => {

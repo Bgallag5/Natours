@@ -1,22 +1,24 @@
-import React, {  useEffect, useContext } from 'react';
-import TourCard from '../components/Tour/TourCard';
+import React, { useEffect } from "react";
+import TourCard from "../components/Tour/TourCard";
 
-import axios from 'axios';
-import { GlobalContext } from '../App';
+import axios from "axios";
+import { useStoreContext } from "../GlobalStore/GlobalStore";
+import { GET_ALL_TOURS } from "../GlobalStore/actions";
+import { calcNextStartDate } from "../utils/helpers";
 
 export default function Overview() {
-  const { tours, setTours,  } = useContext(GlobalContext);
+  const [state, dispatch] = useStoreContext();
+  const { tours } = state;
 
   const getTourData = async () => {
-    const data = await axios.get('/api/v1/tours');
+    const data = await axios.get("/api/v1/tours");
     return data;
   };
 
   useEffect(() => {
     getTourData().then((res) => {
-      console.log('GETTING TOUR DATA');
       console.log(res);
-      setTours(res.data.data.document);
+      dispatch({ type: GET_ALL_TOURS, payload: res.data.data.document });
     });
   }, []);
 

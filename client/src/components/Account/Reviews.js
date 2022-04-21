@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
-import { GlobalContext } from '../../App';
 
 // import { calcStars } from '../../utils/helpers';
 
-export default function Reviews({ page, userViewRef, handleClickReview }) {
-  const { currentUser } = useContext(GlobalContext);
+export default function Reviews({ page, userViewRef, handleClickReview, currentUser }) {
 
   // calcStars if we have a user
   // currentUser && calcStars(currentUser.reviews);

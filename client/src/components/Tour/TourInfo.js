@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
+import { calcNextStartDate } from "../../utils/helpers";
 
 export default function TourInfo({ selectedTour }) {
-
   const {
     name,
     difficulty,
@@ -9,8 +9,10 @@ export default function TourInfo({ selectedTour }) {
     guides,
     maxGroupSize,
     description,
-    // nextStartDate,
+    startDates,
   } = selectedTour;
+
+  const nextStartDate = calcNextStartDate(startDates);
 
   return (
     <section className="section-description">
@@ -24,7 +26,7 @@ export default function TourInfo({ selectedTour }) {
               </i>
               <span className="overview-box__label">Next Date</span>
               <span className="overview-box__text">
-                {/* {nextStartDate[1]} {nextStartDate[3]}{' '} */}
+                {nextStartDate[1]} {nextStartDate[3]}{" "}
               </span>
             </div>
             <div className="overview-box__detail">
@@ -46,7 +48,9 @@ export default function TourInfo({ selectedTour }) {
                 <span className="material-icons">trending_up</span>
               </i>
               <span className="overview-box__label">Rating</span>
-              <span className="overview-box__text">{ratingsAverage.toFixed(1)} / 5</span>
+              <span className="overview-box__text">
+                {ratingsAverage.toFixed(1)} / 5
+              </span>
             </div>
           </div>
           <div className="overview-box__group">
