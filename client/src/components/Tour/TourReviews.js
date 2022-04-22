@@ -42,9 +42,9 @@ export default function TourReviews({ selectedTour }) {
   }, []);
 
   useEffect(() => {
-  //add slider functionality
-  reviews && buildSliderFunctionality();
-  }, [reviews])
+    //add slider functionality
+    reviews && buildSliderFunctionality();
+  }, [reviews]);
 
   //BAD - redo, cannot push these elements to state!! useEffect and build them separately
   //build array of stars based on rating
@@ -76,72 +76,73 @@ export default function TourReviews({ selectedTour }) {
   //   createStars(reviews);
   // }
 
+  let slides;
+  let buttons;
+  let dotContainer;
 
-  const buildSliderFunctionality = () => {
-    const slides = document.querySelectorAll(".slide");
-    const buttons = document.querySelectorAll(".slider__btn");
-    const dotContainer = document.querySelector(".dots");
-
-    //position slides with TransformX
-    const positionSlides = function () {
-      slides?.forEach((slide, i) => {
-        slide.style.transform = `translateX(${
-          100 * (i - currentSlide.current)
-        }%)`;
-      });
-    };
-    positionSlides();
-
-    const handleDotClick = function () {
-      currentDot.current = this.dataset.slide;
-      currentSlide.current = Number(this.dataset.slide);
-      positionSlides();
-      createDots();
-    };
-
-    const createDots = function () {
-      //clear dots html
-      dotContainer.innerHTML = "";
-      slides.forEach(function (slide, i) {
-        dotContainer.insertAdjacentHTML(
-          "beforeend",
-          `<button class="dots__dot ${
-            currentSlide.current === i ? "dots__dot--active" : ""
-          }" data-slide="${i}"></button>`
-        );
-      });
-      dotContainer
-        .querySelectorAll(".dots__dot")
-        .forEach((dot) => dot.addEventListener("click", handleDotClick));
-    };
-
-    createDots();
-
-    const sliderNavigation = (e) => {
-      //set currentSlide ref
-      const offset = e.target.dataset.direction === "right" ? 1 : -1;
-      if (currentSlide.current === 0 && offset === -1) {
-        console.log("NOWHERE OT GO LEFT");
-        return;
-      }
-      if (currentSlide.current === slides.length - 1 && offset === 1) {
-        console.log("NOWHERE OT GO RIGHT");
-        return;
-      }
-      currentSlide.current = currentSlide.current + offset;
-      positionSlides();
-      createDots();
-    };
-
-    buttons?.forEach((button) => {
-      button.addEventListener("click", sliderNavigation);
-    });
-    //remove eventListener
-    buttons?.forEach((button) => {
-      return () => button.removeEventListener("click", sliderNavigation);
+  //position slides with TransformX
+  const positionSlides = function () {
+    slides?.forEach((slide, i) => {
+      slide.style.transform = `translateX(${
+        100 * (i - currentSlide.current)
+      }%)`;
     });
   };
 
+  const createDots = function () {
+    //clear dots html
+    dotContainer.innerHTML = "";
+    slides.forEach(function (slide, i) {
+      dotContainer.insertAdjacentHTML(
+        "beforeend",
+        `<button class="dots__dot ${
+          currentSlide.current === i ? "dots__dot--active" : ""
+        }" data-slide="${i}"></button>`
+      );
+    });
+    dotContainer
+      .querySelectorAll(".dots__dot")
+      .forEach((dot) => dot.addEventListener("click", handleDotClick));
+  };
+
+  const handleDotClick = function () {
+    currentDot.current = this.dataset.slide;
+    currentSlide.current = Number(this.dataset.slide);
+    positionSlides();
+    createDots();
+  };
+
+  const buildSliderFunctionality = () => {
+    slides = document.querySelectorAll(".slide");
+    buttons = document.querySelectorAll(".slider__btn");
+    dotContainer = document.querySelector(".dots");
+    positionSlides();
+    createDots();
+
+    // buttons?.forEach((button) => {
+    //   button.addEventListener("click", sliderNavigation);
+    // });
+    // //remove eventListener
+    // buttons?.forEach((button) => {
+    //   return () => button.removeEventListener("click", sliderNavigation);
+    // });
+  };
+
+  const sliderNavigation = (e) => {
+    //set currentSlide ref
+    const offset = e.target.dataset.direction === "right" ? 1 : -1;
+    if (currentSlide.current === 0 && offset === -1) {
+      console.log("NOWHERE OT GO LEFT");
+      return;
+    }
+    if (currentSlide.current === slides.length - 1 && offset === 1) {
+      console.log("NOWHERE OT GO RIGHT");
+      return;
+    }
+    currentSlide.current = currentSlide.current + offset;
+    positionSlides();
+    createDots();
+  };
 
   return (
     <section className="section-reviews">
@@ -181,10 +182,11 @@ export default function TourReviews({ selectedTour }) {
               </div>
             );
           })}
-        <button data-direction="left" className="slider__btn slider__btn--left">
+        <button onClick={(e) => sliderNavigation(e)} data-direction="left" className="slider__btn slider__btn--left">
           &larr;
         </button>
         <button
+        onClick={(e) => sliderNavigation(e)} 
           data-direction="right"
           className="slider__btn slider__btn--right"
         >
