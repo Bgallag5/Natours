@@ -4,13 +4,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LOGOUT_USER } from '../GlobalStore/actions';
 
-// import { GlobalContext } from '../App';
-// import { useStoreContext } from '../GlobalStore/GlobalStore';
-import { useStoreContext } from '../GlobalStore/GlobalStore';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
-  const [state, dispatch]  = useStoreContext();
-  console.log(state);
+  
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  // console.log(state);
 
   const handleLogout = async () => {
     try {

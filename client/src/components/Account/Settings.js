@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
 export default function Settings({currentUser, page}) {
+  const navigate = useNavigate();
 
 console.log(currentUser);
   const handleEditProfile = async (e) => {
@@ -21,7 +23,7 @@ console.log(currentUser);
           email,
         },
       });
-      window.location.reload();
+      navigate('/account');
     }
   };
 

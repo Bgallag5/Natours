@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
-import { GlobalContext } from '../../App';
-// import { calcNextStartDate } from '../../App';
+import React from 'react';
 import { calcNextStartDate } from '../../utils/helpers';
+// import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
 
-import { useStoreContext } from '../../GlobalStore/GlobalStore';
 export default function TourCard({ tour }) {
-  // const {calcNextStartDate} = useContext(GlobalContext);
-  const [state, dispatch] = useStoreContext();
+  
+  // const state = useSelector(state => state);
+  // const dispatch = useDispatch();
 
   const {
     name,
@@ -94,12 +94,12 @@ export default function TourCard({ tour }) {
           </span>
           <span className="card__footer-text">{` rating (${ratingsQuantity})`}</span>
         </p>
-        <a
+        <Link
           className="btn btn--green btn--small"
-          href={`/tour/${tour.slug}`}
+          to={`/tour/${tour.slug}`}
         >
           Details
-        </a>
+        </Link>
       </div>
     </div>
   );

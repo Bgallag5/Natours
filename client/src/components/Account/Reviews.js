@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
+import { GlobalContext } from '../../App';
 
 // import { calcStars } from '../../utils/helpers';
 
 export default function Reviews({ page, userViewRef, handleClickReview, currentUser }) {
-
+  console.log(currentUser);
   // calcStars if we have a user
   // currentUser && calcStars(currentUser.reviews);
 

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import TourHero from "../components/Tour/TourHero";
 import TourInfo from "../components/Tour/TourInfo";
@@ -6,28 +7,24 @@ import TourPhotos from "../components/Tour/TourPhotos";
 import TourReviews from "../components/Tour/TourReviews";
 import { calcNextStartDate } from "../utils/helpers";
 
-// import { GlobalContext } from "../App";
-import { useStoreContext } from "../GlobalStore/GlobalStore";
 import { SET_SELECTED_TOUR } from "../GlobalStore/actions";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TourDetails() {
-  // const { selectedTour, setSelectedTour, calcNextStartDate } = useContext(GlobalContext);
+  
+  const {selectedTour, tours} = useSelector(state => state);
+  const dispatch = useDispatch();
 
-  const [{selectedTour}, dispatch] = useStoreContext()
-
-
+console.log(tours);
 
   const getDetails = async () => {
     const currentSlug = window.location.href.split("/").pop();
-    const currentTour = await axios.get(`/api/v1/tours`, {
-      params: { slug: currentSlug },
-    }); // /${id}
-    // currentTour.data.data.document[0].nextStartDate = calcNextStartDate(
-    //   currentTour.data.data.document[0].startDates
-    // );
-    // setSelectedTour({ ...currentTour.data.data.document[0] });
-    dispatch({type: SET_SELECTED_TOUR, payload: currentTour.data.data.document[0]})
+    const currentTour = tours.find(el => {
+     return el.slug === currentSlug
+    })
+    console.log(currentTour);
+    dispatch({type: SET_SELECTED_TOUR, payload: currentTour})
   };
 
   useEffect(() => {
@@ -62,12 +59,12 @@ export default function TourDetails() {
                 <p className="cta__text">
                   5 days. 1 adventure. Infinite memories. Make it yours today!
                 </p>
-                <a
+                <Link
                   className="btn btn--green span-all-rows"
-                  href={`/tour/${selectedTour.slug}/book`}
+                  to={`/tour/${selectedTour.slug}/book`}
                 >
                   Book this Tour
-                </a>
+                </Link>
               </div>
             </div>
           </section>

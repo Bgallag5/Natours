@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import TourCard from "../components/Tour/TourCard";
 
 import axios from "axios";
-import { useStoreContext } from "../GlobalStore/GlobalStore";
 import { GET_ALL_TOURS } from "../GlobalStore/actions";
-import { calcNextStartDate } from "../utils/helpers";
+// import { calcNextStartDate } from "../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Overview() {
-  const [state, dispatch] = useStoreContext();
+  const state = useSelector(state => state);
   const { tours } = state;
+  const dispatch = useDispatch();
 
   const getTourData = async () => {
     const data = await axios.get("/api/v1/tours");

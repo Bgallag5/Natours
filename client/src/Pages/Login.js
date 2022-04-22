@@ -1,18 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-import { GlobalContext } from '../App';
-import { useStoreContext } from '../GlobalStore/GlobalStore';
 import { LOGIN_USER } from '../GlobalStore/actions';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
   const [formState, setFormState] = useState({
     email: '',
     password: '',
   });
-
-  const [state, dispatch] = useStoreContext();
+  
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleFormChange = (e) => {

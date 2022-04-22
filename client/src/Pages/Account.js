@@ -5,11 +5,14 @@ import Settings from '../components/Account/Settings';
 import Reviews from '../components/Account/Reviews';
 import Modal from '../components/Account/Modal';
 
-import { useStoreContext } from '../GlobalStore/GlobalStore';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Account() {
-  const [state, dispatch] = useStoreContext();
+  // const [state, dispatch] = useStoreContext();
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
   const {currentUser} = state;
+
   const [page, setPage] = useState('settings');
 
   const userViewRef = useRef();

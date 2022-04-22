@@ -793,10 +793,13 @@ body {
   position: relative;
 }
 
+/* BOOK A TOUR PAGE ////////////// */
+
 .booker {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
 }
 
 .booking-info {
@@ -815,6 +818,8 @@ body {
   max-width: 50rem;
   width: 30%;
 }
+
+/* BOOK A TOUR PAGE */
 
 .review-edit-modal {
   position: absolute;

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useStoreContext } from '../GlobalStore/GlobalStore';
 import { SIGNUP_USER } from '../GlobalStore/actions';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignUp() {
-  const [state, dispatch] = useStoreContext();
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
   //react useNavigate hook - navigate between React-Router routes without state refresh 
   let navigate = useNavigate();
   const [formState, setFormState] = useState({

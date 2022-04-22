@@ -2,31 +2,35 @@ import React, { useEffect, useContext, useState } from 'react';
 
 import { GlobalContext } from '../App';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function BookTour() {
-  const { currentUser } = useContext(GlobalContext);
-  const [currentTour, setCurrentTour] = useState('')
+  // const { currentUser } = useContext(GlobalContext);
+  // const [currentTour, setCurrentTour] = useState('');
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  const {selectedTour, currentUser} = state;
 
-  const loadTourData = async () => {
-    // /tour/the-snow-adventurer/book
-    let tourSlug = window.location.pathname.split('/')[2];
+  // const loadTourData = async () => {
+  //   // /tour/the-snow-adventurer/book
+  //   let tourSlug = window.location.pathname.split('/')[2];
 
-    try {
-      const res = await axios({
-        method: 'GET',
-        url: `/api/v1/tours`,
-        params: {
-          slug: tourSlug,
-        },
-      });
-      if (res.status === 200) {
-        // showAlert('success', 'Logged in successfully!');
-        setCurrentTour(res.data.data.document[0])
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     const res = await axios({
+  //       method: 'GET',
+  //       url: `/api/v1/tours`,
+  //       params: {
+  //         slug: tourSlug,
+  //       },
+  //     });
+  //     if (res.status === 200) {
+  //       // showAlert('success', 'Logged in successfully!');
+  //       // setCurrentTour(res.data.data.document[0]);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleBookSubmit = async (e) => {
     e.preventDefault();
@@ -45,19 +49,19 @@ export default function BookTour() {
   }
 
   useEffect(() => {
-    loadTourData();
+    // loadTourData();
   }, [])
 
   return (
-    currentTour && (
+    selectedTour && (
       <div className="container booker">
         <div className="booking-info">
           <div className="tour-booking-header">
-            <h1>{currentTour.name}</h1>
-            <h1>${currentTour.price}</h1>
+            <h1>{selectedTour.name}</h1>
+            <h1>${selectedTour.price}</h1>
           </div>
           <div className="tour-booking-img">
-            <img className="card__picture-img" src={`/img/tours/${currentTour.imageCover}`} alt="selected tour"></img>
+            <img className="card__picture-img" src={`/img/tours/${selectedTour.imageCover}`} alt="selected tour"></img>
             {/* <p>{currentTour.summary}</p> */}
           </div>
         </div>
