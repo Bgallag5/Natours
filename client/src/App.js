@@ -18,38 +18,34 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_USER } from "./GlobalStore/actions";
 
-
 export const GlobalContext = React.createContext();
 
 function App() {
   //useSelector to return full state
-  const state = useSelector(state => state);
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   console.log(state);
 
-    //on mount fetch /me and set to currentUser
-    useEffect(() => {
-      //if currentUser exists, do not fetch
-      if (state?.currentUser){
-        return
+  //on mount fetch /me and set to currentUser
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const res = await axios({
+        method: "GET",
+        url: "/api/v1/users/me",
+      });
+      console.log(res);
+      if (res.status === 200) {
+        //LOGIN_USER action: just sets the currentUser
+        dispatch({ type: LOGIN_USER, payload: res.data.data.data });
       }
-      async function fetchData() {
-        try {
-          const res = await axios({
-            method: "GET",
-            url: "/api/v1/users/me",
-          });
-          console.log(res);
-          if (res.status === 200 ) {
-            //LOGIN_USER action: just sets the currentUser
-            dispatch({type: LOGIN_USER, payload: res.data.data.data})
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      fetchData();
-    }, []);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div>
@@ -62,7 +58,7 @@ function App() {
             <Route exact path="/signup" element={<SignUp />} />
             <Route exact path="/tour/:slug" element={<TourDetails />} />
             <Route exact path="tour/:slug/book" element={<BookTour />} />
-            <Route exact path="/account" element={<Account />} />
+            <Route exact path="/account" element={state.currentUser && <Account />} />
           </Routes>
         </main>
         <Footer />

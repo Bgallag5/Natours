@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { LOGIN_USER } from '../GlobalStore/actions';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { LOGIN_USER } from "../GlobalStore/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
   const [formState, setFormState] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  
-  const state = useSelector(state => state);
+
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,24 +24,40 @@ export default function Login() {
     // use axios requests to hit our back end
     try {
       const res = await axios({
-        method: 'POST',
-        url: '/api/v1/users/login',
+        method: "POST",
+        url: "/api/v1/users/login",
         data: {
           email,
           password,
         },
       });
       console.log(res);
-      if (res.data.status === 'success') {
-        //route to overview page once logged in
-        dispatch({type: LOGIN_USER, payload: res.data.data.user})
+      if (res.data.status === "success") {
+        dispatch({ type: LOGIN_USER, payload: res.data.data.user });
         // navigate back to overview page
-        navigate('/')
+        window.location.assign('/')
       }
     } catch (err) {
       console.log(err);
     }
   };
+
+  // const setCurrentUser = async () => {
+  //   try {
+  //     const res = await axios({
+  //       method: "GET",
+  //       url: "/api/v1/users/me",
+  //     });
+  //     console.log(res);
+  //     if (res.status === 200) {
+  //       dispatch({ type: LOGIN_USER, payload: res.data.data.user });
+  //       // navigate back to overview page
+  //       navigate("/");
+  //     }
+  //   } catch (err) {
+  //     console.log("Nested Fetch Err:", err);
+  //   }
+  // }
 
   return (
     <>
