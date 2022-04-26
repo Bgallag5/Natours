@@ -28,14 +28,22 @@
 
 .stars__container {
   margin-bottom: 5rem;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
 }
+
+
 
 .reviews__star span {
   height: 4rem;
-  width: 6rem;
-  margin-right: 1px;
+  width: fit-content;
+  margin-right: 2px;
   font-size: 5rem;
   /* color: white */
+}
+.star--small > span{
+font-size: 3rem !important;
 }
 
 .reviews__star--active > span {
@@ -169,3 +177,135 @@
 .hidden {
   display: none;
 }
+
+/* ACCOUNT PAGE ///////////// */
+
+.user-view {
+  background-color: #fff;
+  max-width: 120rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  border-radius: 3px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.07);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.user-view__menu {
+  -webkit-box-flex: 32rem;
+  -ms-flex: 32rem 0 0px;
+  flex: 32rem 0 0;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
+  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+  padding: 4rem 0;
+}
+.user-view__content {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 7rem 0;
+}
+.user-view__form-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+.user-view__review-container {
+  max-width: 80rem;
+  margin: 0;
+  padding: 0 4rem;
+  position: relative;
+}
+
+
+.review-edit-modal {
+  /* position: fixed to always pop up in middle of */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70rem;
+  height: 45rem;
+  margin: 1vh auto;
+  z-index: 9999;
+  background-color: white;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  padding: 5rem 7rem;
+  border-radius: 5px;
+  transition: all 0.6s linear;
+  overflow: hidden;
+}
+
+.modal-is-open {
+  overflow: hidden;
+}
+
+.is-blurred {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+  z-index: 1;
+}
+
+#review-text-edit {
+  height: 10em;
+  width: 100%;
+  padding: 5px;
+}
+
+.my-reviews {
+  background: linear-gradient(to right bottom, #7dd56f, #28b487);
+  clip-path: polygon(0 1vw, 100% 0, 100% 95%, 0 100%);
+  -webkit-clip-path: polygon(0 1vw, 100% 0, 100% 95%, 0 100%);
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: fit-content;
+  padding: 4rem 4rem 8rem 4rem;
+  
+}
+
+.my-reviews__info{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-reviews__card {
+  width: 40rem;
+  height: 30rem;
+  padding: 4rem;
+  
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+  scroll-snap-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+/*  ACCOUNT PAGE  */

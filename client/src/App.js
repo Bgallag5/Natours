@@ -58,7 +58,11 @@ function App() {
             <Route exact path="/signup" element={<SignUp />} />
             <Route exact path="/tour/:slug" element={<TourDetails />} />
             <Route exact path="tour/:slug/book" element={<BookTour />} />
-            <Route exact path="/account" element={state.currentUser && <Account />} />
+            <Route
+              exact
+              path="/account"
+              element={state.currentUser && <Account />}
+            />
           </Routes>
         </main>
         <Footer />

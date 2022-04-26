@@ -5,32 +5,13 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { createStore } from "redux";
 
-// const saveToLocalStorage = (state) => {
-//   try {
-//     localStorage.setItem("persistedState", JSON.stringify(state));
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// const getFromLocalStorage = () => {
-//   try {
-//     const prevState = localStorage.getItem("persistedState");
-//     return prevState ? JSON.parse(prevState) : undefined;
-//   } catch (err) {
-//     console.log(err);
-//     return undefined;
-//   }
-// };
-
 const persistConfig = {
   key: "root",
   storage,
 };
 
+//redux persist - persist state on reloads 
 const persistedReducer = persistReducer(persistConfig, reducer);
-
-
 let store = createStore(persistedReducer);
 let persistor = persistStore(store);
 

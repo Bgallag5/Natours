@@ -30,3 +30,7 @@ const reducer = (state, action) => {
 };
 
 export default reducer;
+
+
+//SET_CURRENT_USER
+//

@@ -30,7 +30,7 @@ html {
 body {
   line-height: 1.6;
   font-weight: 300;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   color: #777;
   padding: 3rem;
   min-height: 100vh;
@@ -554,7 +554,7 @@ body {
 }
 
 .marker {
-  background-image: url('../../../public/img/pin.png');
+  background-image: url("../../../public/img/pin.png");
   background-size: cover;
   width: 32px;
   height: 40px;
@@ -567,7 +567,7 @@ body {
 
 .mapboxgl-popup-content {
   text-align: center;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   padding: 1.5rem !important;
   font-size: 1.4rem;
   -webkit-box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15) !important;
@@ -632,7 +632,7 @@ body {
 }
 .reviews:before,
 .reviews:after {
-  content: '';
+  content: "";
   width: 2rem;
 }
 .reviews__avatar {
@@ -747,6 +747,8 @@ body {
   font-weight: 400;
 }
 
+/*  USER PAGE ////////////// */
+
 .user-view {
   background-color: #fff;
   max-width: 120rem;
@@ -793,33 +795,7 @@ body {
   position: relative;
 }
 
-/* BOOK A TOUR PAGE ////////////// */
-
-.booker {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-}
-
-.booking-info {
-  margin: 0 3em;
-  max-width: 50rem;
-  width: 30%;
-}
-
-.tour-booking-header {
-  display: flex;
-  flex: row;
-  justify-content: space-between;
-}
-
-.booking-submit {
-  max-width: 50rem;
-  width: 30%;
-}
-
-/* BOOK A TOUR PAGE */
+/*  USER PAGE  */
 
 .review-edit-modal {
   position: absolute;
@@ -1393,5 +1369,5 @@ body {
   transform: translateY(-2px);
 }
 
-
-@import './style.css';
+@import "./style.css";
+@import "./bookTour.css";

@@ -2,24 +2,24 @@ import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import { SET_REVIEWS } from "../../GlobalStore/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { calcStars } from "../../utils/helpers";
+import { buildStars } from "../../utils/helpers";
 
 export default function TourReviews({ selectedTour }) {
   const state = useSelector((state) => state);
   const { reviews } = state;
   const dispatch = useDispatch();
-  console.log(state);
 
+  //DOM elements
   //reference to the current slide
   const currentSlide = useRef(0);
   const currentDot = useRef(0);
+  const slides = useRef();
+  const dotContainer = useRef();
 
   //always set current dot to current slide
   useEffect(() => {
     currentDot.current = currentSlide.current;
   });
-
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   //axios request get reviews
   const getReviewData = async () => {
@@ -36,75 +36,50 @@ export default function TourReviews({ selectedTour }) {
     }
   };
 
-  //call getReviewData when its callback triggers
+  //call getReviewData on mount
   useEffect(() => {
     getReviewData();
   }, []);
+
+  const buildSliderFunctionality = () => {
+    slides.current = document.querySelectorAll(".slide");
+    dotContainer.current = document.querySelector(".dots");
+    positionSlides();
+    createDots();
+  };
 
   useEffect(() => {
     //add slider functionality
     reviews && buildSliderFunctionality();
   }, [reviews]);
 
-  //BAD - redo, cannot push these elements to state!! useEffect and build them separately
-  //build array of stars based on rating
-  const createStars = (reviews) => {
-    reviews.map((review) => {
-      let num = Math.round(review.rating);
-      review.stars = [];
-      //push 5 stars active/inactive based on user rating
-      for (let i = 1; i < 6; i++) {
-        if (i <= num) {
-          review.stars.push(
-            <i key={i} className="reviews__star reviews__star--active">
-              <span className="material-icons">star</span>
-            </i>
-          );
-        } else if (i > num) {
-          review.stars.push(
-            <i key={i} className="reviews__star reviews__star--inactive">
-              <span className="material-icons">star</span>
-            </i>
-          );
-        }
-      }
-    });
-  };
-
-  // review stars
-  // if (reviews) {
-  //   createStars(reviews);
-  // }
-
-  let slides;
-  let buttons;
-  let dotContainer;
-
   //position slides with TransformX
   const positionSlides = function () {
-    slides?.forEach((slide, i) => {
+    slides.current?.forEach((slide, i) => {
       slide.style.transform = `translateX(${
         100 * (i - currentSlide.current)
       }%)`;
     });
   };
 
+  //build slider dots
   const createDots = function () {
     //clear dots html
-    dotContainer.innerHTML = "";
-    slides.forEach(function (slide, i) {
-      dotContainer.insertAdjacentHTML(
+    dotContainer.current.innerHTML = "";
+    slides.current.forEach(function (slide, i) {
+      dotContainer.current.insertAdjacentHTML(
         "beforeend",
         `<button class="dots__dot ${
           currentSlide.current === i ? "dots__dot--active" : ""
         }" data-slide="${i}"></button>`
       );
     });
-    dotContainer
+    dotContainer.current
       .querySelectorAll(".dots__dot")
       .forEach((dot) => dot.addEventListener("click", handleDotClick));
   };
 
+  //click on a dot navigates to that review
   const handleDotClick = function () {
     currentDot.current = this.dataset.slide;
     currentSlide.current = Number(this.dataset.slide);
@@ -112,33 +87,20 @@ export default function TourReviews({ selectedTour }) {
     createDots();
   };
 
-  const buildSliderFunctionality = () => {
-    slides = document.querySelectorAll(".slide");
-    buttons = document.querySelectorAll(".slider__btn");
-    dotContainer = document.querySelector(".dots");
-    positionSlides();
-    createDots();
-
-    // buttons?.forEach((button) => {
-    //   button.addEventListener("click", sliderNavigation);
-    // });
-    // //remove eventListener
-    // buttons?.forEach((button) => {
-    //   return () => button.removeEventListener("click", sliderNavigation);
-    // });
-  };
-
+  //arrow button clicks move the slider right/left
   const sliderNavigation = (e) => {
-    //set currentSlide ref
+    //offset +1/-1 based on direction
     const offset = e.target.dataset.direction === "right" ? 1 : -1;
+    // can't navigate beyond length or reviews arr
     if (currentSlide.current === 0 && offset === -1) {
       console.log("NOWHERE OT GO LEFT");
       return;
     }
-    if (currentSlide.current === slides.length - 1 && offset === 1) {
+    if (currentSlide.current === slides.current.length - 1 && offset === 1) {
       console.log("NOWHERE OT GO RIGHT");
       return;
     }
+    //set currentSlide.current based on button direction
     currentSlide.current = currentSlide.current + offset;
     positionSlides();
     createDots();
@@ -155,9 +117,7 @@ export default function TourReviews({ selectedTour }) {
                 className={`slide slide--${i} ${i === 4 ? "" : ""}`}
               >
                 <div className="stars__container">
-                  {review.stars?.map((star, i) => {
-                    return star;
-                  })}
+                  {buildStars(review.rating)}
                 </div>
                 <div className="testimonial">
                   <blockquote className="testimonial__text">
@@ -182,11 +142,15 @@ export default function TourReviews({ selectedTour }) {
               </div>
             );
           })}
-        <button onClick={(e) => sliderNavigation(e)} data-direction="left" className="slider__btn slider__btn--left">
+        <button
+          onClick={(e) => sliderNavigation(e)}
+          data-direction="left"
+          className="slider__btn slider__btn--left"
+        >
           &larr;
         </button>
         <button
-        onClick={(e) => sliderNavigation(e)} 
+          onClick={(e) => sliderNavigation(e)}
           data-direction="right"
           className="slider__btn slider__btn--right"
         >

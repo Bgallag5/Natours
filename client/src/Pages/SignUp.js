@@ -9,6 +9,7 @@ export default function SignUp() {
   const dispatch = useDispatch();
   //react useNavigate hook - navigate between React-Router routes without state refresh 
   let navigate = useNavigate();
+  
   const [formState, setFormState] = useState({
     name: '',
     email: '',
