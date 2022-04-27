@@ -24,7 +24,7 @@ function App() {
   //useSelector to return full state
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  // console.log(state);
+  console.log(state);
 
   //on mount fetch /me and set to currentUser
   useEffect(() => {

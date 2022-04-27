@@ -16,7 +16,7 @@ const reducer = (state, action) => {
     case LOGIN_USER:
       return { ...state, currentUser: action.payload };
     case LOGOUT_USER:
-      return { ...state, currentUser: null, selectedTour: null, reviews: null };
+      return { ...state, currentUser: null, selectedTour: null, reviews: null, selectedReview: null };
     case SIGNUP_USER:
       return { ...state, currentUser: action.payload };
     case GET_ALL_TOURS:

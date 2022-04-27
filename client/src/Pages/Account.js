@@ -33,6 +33,7 @@ export default function Account() {
     setReviewText(e.target.value);
   }
 
+  //set current account page (tab) 
   function setPage (pageTitle) {
     dispatch({type: SET_ACCOUNT_PAGE, payload: pageTitle})
   }
@@ -43,7 +44,6 @@ export default function Account() {
     modalState,
     handleTextChange,
     handleModalChange,
-    toggleModalState,
   };
 
   return (

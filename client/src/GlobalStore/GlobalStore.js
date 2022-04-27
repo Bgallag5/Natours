@@ -18,7 +18,7 @@ const preloadedState = {
 
 //redux persist - persist state on reloads 
 const persistedReducer = persistReducer(persistConfig, reducer);
-let store = createStore(persistedReducer, {page: 'settings', selectedReview: null});
+let store = createStore(persistedReducer, preloadedState);
 let persistor = persistStore(store);
 
 export {store, persistor}

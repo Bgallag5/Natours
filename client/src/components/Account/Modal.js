@@ -1,16 +1,26 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import {buildStars} from '../../utils/helpers';
+import {useSelector, useDispatch} from 'react-redux';
 
 export default function Modal({ props }) {
   const {
-    selectedReview,
+    // selectedReview,
     reviewText,
     modalState,
     handleTextChange,
     handleModalChange,
   } = props;
 
+  const {selectedReview} = useSelector(state => state)
+
   const modalRef = useRef();
+
+  const [editedRating, setEditedRating] = useState(selectedReview?.rating);
+
+  useEffect(() => {
+    selectedReview && setEditedRating(selectedReview.rating)
+  }, [selectedReview])
 
   async function handleReviewSubmit(e) {
     e.preventDefault();
@@ -21,6 +31,7 @@ export default function Modal({ props }) {
         url: `/api/v1/tours/${selectedReview?.tour.id}/reviews/${selectedReview.id}`,
         data: {
           review: reviewText,
+          rating: Number(editedRating)
         },
       });
       if (res.statusText === 'OK') {
@@ -31,6 +42,23 @@ export default function Modal({ props }) {
       console.log(err);
     }
   }
+
+  const starsRef = useRef();
+
+  const ReviewStars = useCallback((rating = editedRating) => {
+    console.log(rating);
+    let stars = buildStars(rating, "star--small");
+
+    return <div ref={starsRef}>{stars}</div> ;
+  }, [editedRating])
+
+  starsRef.current?.querySelectorAll('.reviews__star').forEach((star, i) => {
+    star.addEventListener('click', () => setEditedRating(i + 1)) 
+  });
+
+console.log(selectedReview);
+
+
   return (
     <div
       className="review-edit-modal"
@@ -46,6 +74,7 @@ export default function Modal({ props }) {
           {new Date(selectedReview && selectedReview.createdAt).toLocaleDateString()}
         </h3>
         <label className="form__label">My Review:</label>
+        <div>{ReviewStars()}</div>
         <textarea
           id="review-text-edit"
           value={reviewText}
@@ -55,6 +84,7 @@ export default function Modal({ props }) {
       <button
         className="btn btn--green"
         onClick={() => {
+          setEditedRating(selectedReview?.rating)
           handleModalChange();
         }}
       >

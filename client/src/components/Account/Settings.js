@@ -1,37 +1,26 @@
-import React, { useRef } from "react";
-import { GlobalContext } from "../../App";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 export default function Settings({ currentUser, page }) {
   const navigate = useNavigate();
-  const imageURIRef = useRef();
 
-  console.log(currentUser);
+  //handle edit user info
   const handleEditProfile = async (e) => {
     e.preventDefault();
-    // let name = document.querySelector("#name").value;
-    // let email = document.querySelector("#email").value;
-    // let photo = document.querySelector('#photo').value;
-
+    //capture form data
     const form = new FormData();
     form.append("name", document.querySelector("#name").value);
     form.append("email", document.querySelector("#email").value);
     form.append("photo", document.getElementById("photo").files[0]);
     console.log(form);
-
-    // let photo = imageURIRef.current;
-    // console.log(photo);
-    // console.log(name);
-    // console.log(email);
-
+    //api request to /updateMe
     try {
       //dispatch update profile
       const response = await axios({
         method: "PATCH",
         url: "/api/v1/users/updateMe",
-        data: form
+        data: form,
       });
       console.log(response);
       navigate("/account");
@@ -40,6 +29,7 @@ export default function Settings({ currentUser, page }) {
     }
   };
 
+  //handle edit user's password
   const handlePasswordChange = async (e) => {
     e.preventDefault();
 
@@ -60,35 +50,6 @@ export default function Settings({ currentUser, page }) {
       navigate("/account");
     }
   };
-
-  // const handleChoosePhoto = async (e) => {
-  //   e.preventDefault();
-  //   //pop up file selector when button is clicked
-
-  //   const response = await axios({
-  //     method: 'POST',
-  //     url: '/api/v1/users/updateMe',
-  //   });
-  //   console.log(response);
-  // };
-
-  // window.addEventListener("load", function () {
-  //   document
-  //     .querySelector(".img__upload")
-  //     .addEventListener("change", function () {
-  //       console.log("FILE IS UPLOADING");
-  //       if (this.files && this.files[0]) {
-  //         console.log(this.files);
-
-  //         const reader = new FileReader();
-  //         reader.addEventListener("load", () => {
-  //           // console.log(reader.result);
-  //           imageURIRef.current = reader.result;
-  //         });
-  //         reader.readAsDataURL(this.files[0]);
-  //       }
-  //     });
-  // });
 
   return (
     <div style={{ display: page === "settings" ? "" : "none" }}>
@@ -116,7 +77,7 @@ export default function Settings({ currentUser, page }) {
           <div className="form__group form__photo-upload">
             <img
               className="form__user-photo"
-              src={`/img/users/${currentUser.photo ?? 'default.png'}`}
+              src={`/img/users/${currentUser.photo ?? "default.png"}`}
               alt="person"
             ></img>
             <input
