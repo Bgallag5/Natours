@@ -18,7 +18,7 @@ export default function Modal({ props }) {
     try {
       const res = await axios({
         method: 'PATCH',
-        url: `/api/v1/tours/${selectedReview.tour.id}/reviews/${selectedReview.id}`,
+        url: `/api/v1/tours/${selectedReview?.tour.id}/reviews/${selectedReview.id}`,
         data: {
           review: reviewText,
         },
@@ -43,7 +43,7 @@ export default function Modal({ props }) {
         </h2>
         <h3>
           Review written on:{' '}
-          {new Date(selectedReview.createdAt).toLocaleDateString()}
+          {new Date(selectedReview && selectedReview.createdAt).toLocaleDateString()}
         </h3>
         <label className="form__label">My Review:</label>
         <textarea

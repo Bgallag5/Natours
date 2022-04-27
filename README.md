@@ -23,7 +23,7 @@ $ git clone git@github.com:Bgallag5/Natours.git
 $ npm install
 
 # Run the app
-$ npm start
+$ npm run dev
 ```
 
 ### Heroku Link

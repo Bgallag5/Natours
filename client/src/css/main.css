@@ -1088,6 +1088,7 @@ body {
   text-decoration: none;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .side-nav label:hover,

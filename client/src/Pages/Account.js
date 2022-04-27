@@ -1,25 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Settings from '../components/Account/Settings';
 import Reviews from '../components/Account/Reviews';
 import Modal from '../components/Account/Modal';
 
 import { useDispatch, useSelector } from "react-redux";
+import { SET_ACCOUNT_PAGE, SET_SELECTED_REVIEW } from '../GlobalStore/actions';
 
 export default function Account() {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-  const {currentUser} = state;
+  const {currentUser, selectedReview, page} = state;
 
   const userViewRef = useRef();
   
   //component level state
-  const [page, setPage] = useState('settings');
   const [modalState, toggleModalState] = useState(false);
-  const [selectedReview, setSelectedReview] = useState('');
   const [reviewText, setReviewText] = useState('');
 
   const handleClickReview = (review) => {
-    setSelectedReview(review);
+    dispatch({type: SET_SELECTED_REVIEW, payload: review})
     setReviewText(review.review);
     handleModalChange();
   };
@@ -32,6 +31,10 @@ export default function Account() {
   function handleTextChange(e) {
     e.preventDefault();
     setReviewText(e.target.value);
+  }
+
+  function setPage (pageTitle) {
+    dispatch({type: SET_ACCOUNT_PAGE, payload: pageTitle})
   }
 
   const modalProps = {

@@ -10,14 +10,20 @@ const persistConfig = {
   storage,
 };
 
+const preloadedState = {
+    page: 'settings',
+    selectedReview: null,
+    currentUser: null,
+}
+
 //redux persist - persist state on reloads 
 const persistedReducer = persistReducer(persistConfig, reducer);
-let store = createStore(persistedReducer);
+let store = createStore(persistedReducer, {page: 'settings', selectedReview: null});
 let persistor = persistStore(store);
 
 export {store, persistor}
 
-// export default persistedStore;
+
 
 ///////// OLD CONTEXT PROVIDER //////////
 // import React, { useContext, useReducer } from "react";

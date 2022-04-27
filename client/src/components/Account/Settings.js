@@ -1,63 +1,97 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../../App';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef } from "react";
+import { GlobalContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
-export default function Settings({currentUser, page}) {
+export default function Settings({ currentUser, page }) {
   const navigate = useNavigate();
+  const imageURIRef = useRef();
 
-console.log(currentUser);
+  console.log(currentUser);
   const handleEditProfile = async (e) => {
     e.preventDefault();
-    let name = document.querySelector('#name').value;
-    let email = document.querySelector('#email').value;
+    // let name = document.querySelector("#name").value;
+    // let email = document.querySelector("#email").value;
+    // let photo = document.querySelector('#photo').value;
 
-    if (name && email) {
+    const form = new FormData();
+    form.append("name", document.querySelector("#name").value);
+    form.append("email", document.querySelector("#email").value);
+    form.append("photo", document.getElementById("photo").files[0]);
+    console.log(form);
+
+    // let photo = imageURIRef.current;
+    // console.log(photo);
+    // console.log(name);
+    // console.log(email);
+
+    try {
       //dispatch update profile
       const response = await axios({
-        method: 'PATCH',
-        url: '/api/v1/users/updateMe',
-        data: {
-          name,
-          email,
-        },
+        method: "PATCH",
+        url: "/api/v1/users/updateMe",
+        data: form
       });
-      navigate('/account');
+      console.log(response);
+      navigate("/account");
+    } catch (err) {
+      console.log(err);
     }
   };
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
 
-    let currentPassword = document.querySelector('#password-current').value;
-    let newPassword = document.querySelector('#password').value;
-    let confirmNewPassword = document.querySelector('#password-confirm').value;
+    let currentPassword = document.querySelector("#password-current").value;
+    let newPassword = document.querySelector("#password").value;
+    let confirmNewPassword = document.querySelector("#password-confirm").value;
 
     if (currentPassword && newPassword && confirmNewPassword) {
       const response = await axios({
-        method: 'PATCH',
-        url: '/api/v1/users/updatePassword',
+        method: "PATCH",
+        url: "/api/v1/users/updatePassword",
         data: {
           currentPassword,
           newPassword,
           confirmNewPassword,
         },
       });
+      navigate("/account");
     }
   };
 
-  const handleChoosePhoto = async (e) => {
-    e.preventDefault();
+  // const handleChoosePhoto = async (e) => {
+  //   e.preventDefault();
+  //   //pop up file selector when button is clicked
 
-    const response = await axios({
-      method: 'POST',
-      url: '/api/v1/users/uploadPhoto',
-    });
-  };
+  //   const response = await axios({
+  //     method: 'POST',
+  //     url: '/api/v1/users/updateMe',
+  //   });
+  //   console.log(response);
+  // };
+
+  // window.addEventListener("load", function () {
+  //   document
+  //     .querySelector(".img__upload")
+  //     .addEventListener("change", function () {
+  //       console.log("FILE IS UPLOADING");
+  //       if (this.files && this.files[0]) {
+  //         console.log(this.files);
+
+  //         const reader = new FileReader();
+  //         reader.addEventListener("load", () => {
+  //           // console.log(reader.result);
+  //           imageURIRef.current = reader.result;
+  //         });
+  //         reader.readAsDataURL(this.files[0]);
+  //       }
+  //     });
+  // });
 
   return (
-    <div style={{ display: page === 'settings' ? '' : 'none' }}>
+    <div style={{ display: page === "settings" ? "" : "none" }}>
       <div className="user-view__form-container">
         <h2 className="heading-secondary ma-bt-md">
           {currentUser && currentUser.name}'s Settings
@@ -82,19 +116,17 @@ console.log(currentUser);
           <div className="form__group form__photo-upload">
             <img
               className="form__user-photo"
-              src="/img/users/default.jpg"
+              src={`/img/users/${currentUser.photo ?? 'default.png'}`}
               alt="person"
             ></img>
             <input
-              className="form__upload"
+              className="form__upload img__upload"
               type="file"
               accept="image/*"
               id="photo"
               name="photo"
             ></input>
-            <label htmlFor="photo" onClick={handleChoosePhoto}>
-              Choose New Picture
-            </label>
+            <label htmlFor={"photo"}>Choose New Picture</label>
           </div>
           <div className="form__group right">
             <button type="submit" className="btn btn-small btn-green">

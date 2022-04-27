@@ -6,21 +6,25 @@ const multer = require('multer');
 const sharp = require('sharp');
 
 const handlerFactory = require('./handlerFactory');
+const { update } = require('../models/User');
 
-const fileStorageEngine = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '../public/img/users')
-  },
-  filename: (req, file, cb) => {
-    cb(null, `user${file.originalname}`)
+const multerStorage = multer.memoryStorage();
+const multerFilter = (req, file, cb) => {
+  console.log(file);
+  if (file.mimetype.startsWith('image')){
+    cb(null, true)
+  } else {
+    cb(new AppError('Not an Image', 400), false)
   }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
 });
 
-exports.uploadUserPhoto = async (req, res, next) => {
-  upload.single('photo');
 
-  next();
-} 
+exports.uploadUserPhoto = upload.single('photo');
 
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
@@ -48,7 +52,7 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.getOneUser = handlerFactory.getOne(User, 'reviews');
+exports.getOneUser = handlerFactory.getOne(User, 'reviews', 'photo');
 exports.updateUser = handlerFactory.updateOne(User);
 exports.deleteUser = handlerFactory.deleteOne(User);
 exports.getAllUsers = handlerFactory.getAll(User);
@@ -61,19 +65,25 @@ exports.getMe = (req, res, next) => {
 }
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  console.log('THIS ????????////////////');
+  console.log(req.body);
+  console.log(req.file);
   //1 THORW ERROR IF USER TRIES TO UPDATE PASSWORD DATA
-  if (req.body.password || req.body.confirmPassword) {
-    return next(
-      new AppError('You cannot update password information this way', 400)
-    );
-  }
+  // if (req.body.password || req.body.confirmPassword) {
+  //   return next(
+  //     new AppError('You cannot update password information this way', 400)
+  //   );
+  // }
   //2 Update User with new data
   // specify fields we are allowing to be updated
   const filteredBody = filterObj(req.body, 'name', 'email');
+  if (req.file) filteredBody.photo = req.file.filename
+  console.log(filteredBody);
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     runValidators: true,
     new: true,
   });
+  console.log(updatedUser);
   res.status(200).json({
     status: 'success',
     data: {

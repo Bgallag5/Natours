@@ -1,8 +1,5 @@
-import React, { useContext } from "react";
-import { GlobalContext } from "../../App";
+import React from "react";
 import { buildStars, formatDate } from "../../utils/helpers";
-
-// import { calcStars } from '../../utils/helpers';
 
 export default function Reviews({
   page,
@@ -11,10 +8,6 @@ export default function Reviews({
   currentUser,
 }) {
   console.log(currentUser);
-  // calcStars if we have a user
-  // currentUser && calcStars(currentUser.reviews);
-  console.log(currentUser.reviews[0]);
-  console.log(formatDate(currentUser.reviews[0].createdAt));
 
   return (
     <div style={{ display: page === "reviews" ? "block" : "none" }}>
@@ -23,16 +16,13 @@ export default function Reviews({
         <div className="my-reviews">
           {currentUser &&
             currentUser.reviews.map((review) => {
-              const reviewStars = buildStars(review.rating, 'star--small');
+              const reviewStars = buildStars(review.rating, "star--small");
               return (
-                <>
+                <React.Fragment key={review.id}>
                   <div className="my-reviews__info">
                     <h1>{review.tour.name}</h1>
-                      <h2>Reviewed on: {formatDate(review.createdAt)}</h2>
-                    <div className="stars__container">
-                    {reviewStars}
-                    </div>
-
+                    <h2>Reviewed on: {formatDate(review.createdAt)}</h2>
+                    <div className="stars__container">{reviewStars}</div>
                   </div>
                   <div
                     onClick={() => handleClickReview(review)}
@@ -41,20 +31,8 @@ export default function Reviews({
                   >
                     <div className="reviews__avatar"></div>
                     <p className="reviews__text">{review.review}</p>
-                    {/* <div className="reviews__rating">
-                    {review.numberStars.map((star) => {
-                      return (
-                        <i
-                          key={Math.random() * 1000}
-                          className="reviews__star reviews__star--active"
-                        >
-                          <span className="material-icons">star</span>
-                        </i>
-                      );
-                    })}
-                  </div> */}
                   </div>
-                </>
+                </React.Fragment>
               );
             })}
         </div>

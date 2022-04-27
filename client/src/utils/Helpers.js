@@ -24,10 +24,7 @@ export const calcStars = (reviewArr) => {
 };
 
 export const formatDate = (dateStr) => {
-  console.log(dateStr);
-  // let formatted = new Date(dateStr).toDateString()
   let formatted = new Date(dateStr).toLocaleDateString();
-  console.log(formatted);
   return formatted;
 };
 

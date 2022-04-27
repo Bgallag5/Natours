@@ -27,7 +27,6 @@ export default function TourReviews({ selectedTour }) {
       const response = await axios.get(
         `/api/v1/tours/${selectedTour._id}/reviews`
       );
-      console.log(response);
       if (response.status === 200) {
         dispatch({ type: SET_REVIEWS, payload: response.data.data.document });
       }
@@ -93,11 +92,9 @@ export default function TourReviews({ selectedTour }) {
     const offset = e.target.dataset.direction === "right" ? 1 : -1;
     // can't navigate beyond length or reviews arr
     if (currentSlide.current === 0 && offset === -1) {
-      console.log("NOWHERE OT GO LEFT");
       return;
     }
     if (currentSlide.current === slides.current.length - 1 && offset === 1) {
-      console.log("NOWHERE OT GO RIGHT");
       return;
     }
     //set currentSlide.current based on button direction

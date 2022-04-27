@@ -24,7 +24,7 @@ function App() {
   //useSelector to return full state
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(state);
+  // console.log(state);
 
   //on mount fetch /me and set to currentUser
   useEffect(() => {
@@ -37,7 +37,6 @@ function App() {
         method: "GET",
         url: "/api/v1/users/me",
       });
-      console.log(res);
       if (res.status === 200) {
         //LOGIN_USER action: just sets the currentUser
         dispatch({ type: LOGIN_USER, payload: res.data.data.data });

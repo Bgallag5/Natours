@@ -17,10 +17,10 @@ router.use(authController.auth);
 
 //must be logged in to use these routes
 router.route('/me').get(userController.getMe, userController.getOneUser);
-router.route('/updateMe').patch(userController.updateMe)
-router.route('/uploadPhoto').post(userController.uploadUserPhoto, userController.resizeUserPhoto);
-router.route('/deleteMe').delete(userController.deleteMe);
+router.route('/updateMe').patch(userController.uploadUserPhoto, userController.resizeUserPhoto, userController.updateMe)
 router.route('/updatePassword').patch(authController.updatePassword);
+// router.route('/uploadPhoto').post(userController.uploadUserPhoto, userController.resizeUserPhoto);
+router.route('/deleteMe').delete(userController.deleteMe);
 
 
 //RESTRICT TO ADMIN all routes below this line

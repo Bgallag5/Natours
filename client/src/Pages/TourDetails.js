@@ -16,14 +16,12 @@ export default function TourDetails() {
   const {selectedTour, tours} = useSelector(state => state);
   const dispatch = useDispatch();
 
-console.log(tours);
 
   const getDetails = async () => {
     const currentSlug = window.location.href.split("/").pop();
     const currentTour = tours.find(el => {
      return el.slug === currentSlug
     })
-    console.log(currentTour);
     dispatch({type: SET_SELECTED_TOUR, payload: currentTour})
   };
 
