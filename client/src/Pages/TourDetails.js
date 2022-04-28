@@ -5,7 +5,6 @@ import TourHero from "../components/Tour/TourHero";
 import TourInfo from "../components/Tour/TourInfo";
 import TourPhotos from "../components/Tour/TourPhotos";
 import TourReviews from "../components/Tour/TourReviews";
-import { calcNextStartDate } from "../utils/helpers";
 
 import { SET_SELECTED_TOUR } from "../GlobalStore/actions";
 import axios from "axios";
