@@ -41,7 +41,7 @@
   margin-right: 2px;
   font-size: 5rem;
   cursor: pointer;
-
+  /* color: white; */
 }
 .star--small > span{
 font-size: 3rem !important;
