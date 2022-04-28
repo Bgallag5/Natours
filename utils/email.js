@@ -62,7 +62,6 @@ const createEmailMarkup = (template, url, firstName, from) => {
                   </p>
                   <p>If you did not request a password reset please ignore this email 🙂</p>
                   <p>- Ben Gallagher, Owner</p>
-                  <p>${from}</p>
                 </div>
            `;
 
@@ -80,7 +79,6 @@ const createEmailMarkup = (template, url, firstName, from) => {
                 staff. You can find them on our Contact Page.
               </p>
               <p>- Ben Gallagher, Owner</p>
-              <p>${from}</p>
             </div>
        `;  
 

@@ -54,28 +54,3 @@ export const buildStars = (rating, classNames) => {
   }
   return stars;
 };
-
-//BAD - redo, cannot push these elements to state!! useEffect and build them separately
-//build array of stars based on rating
-// const createStars = (reviews) => {
-//   reviews.map((review) => {
-//     let num = Math.round(review.rating);
-//     review.stars = [];
-//     //push 5 stars active/inactive based on user rating
-//     for (let i = 1; i < 6; i++) {
-//       if (i <= num) {
-//         review.stars.push(
-//           <i key={i} className="reviews__star reviews__star--active">
-//             <span className="material-icons">star</span>
-//           </i>
-//         );
-//       } else if (i > num) {
-//         review.stars.push(
-//           <i key={i} className="reviews__star reviews__star--inactive">
-//             <span className="material-icons">star</span>
-//           </i>
-//         );
-//       }
-//     }
-//   });
-// };
