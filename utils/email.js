@@ -27,7 +27,7 @@ module.exports = class Email {
   //send the actual email
   async sendEmail(template, subject) {
     //1 - render email HTML (as a string)
-    const html = createEmailMarkup(this.firstName, this.from);
+    const html = createEmailMarkup(template, this.url, this.firstName, this.from);
     //2 Define email options
     const mailOptions = {
       from: this.from,
@@ -43,23 +43,46 @@ module.exports = class Email {
   async sendWelcome() {
     await this.sendEmail("Welcome", "Welcome to Natours!");
   }
+
+  async sendPasswordReset(){
+      await this.sendEmail('PasswordReset', "Reset your password")
+  }
 };
 
-const createEmailMarkup = (firstName, from) => {
-  return `
-      <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-        <h4>Hello ${firstName}!</h4>
-        <p>Welcome to Natours 🎉🎈</p>
-        <p>
-          You're all signed up and ready to go. Go back to the <a target="__blank" rel="noreferrer" href="www.google.com"> Tour Page</a> to
-          browse or book tours.
-        </p>
-        <p>
-          If you need help or have any questions please reach out to our amazing
-          staff. You can find them on our Contact Page.
-        </p>
-        <p>- Ben Gallagher, Owner</p>
-        <p>${from}</p>
-      </div>
- `;
+const createEmailMarkup = (template, url, firstName, from) => {
+    switch(template){
+        case "PasswordReset":
+            return `
+                <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                  <h4>Hello ${firstName}!</h4>
+                  <p>Forgot your password? <a target="__blank" rel="noreferrer" href=${url}>Click here to reset it.</a></p>
+                  <p>
+                    If you need help or have any questions please reach out to our amazing
+                    staff. You can find them on our Contact Page.
+                  </p>
+                  <p>If you did not request a password reset please ignore this email 🙂</p>
+                  <p>- Ben Gallagher, Owner</p>
+                  <p>${from}</p>
+                </div>
+           `;
+
+        case "Welcome":
+            return `
+            <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+              <h4>Hello ${firstName}!</h4>
+              <p>Welcome to Natours 🎉🎈</p>
+              <p>
+                You're all signed up and ready to go. Go back to the <a target="__blank" rel="noreferrer" href="www.google.com"> Tour Page</a> to
+                browse or book tours.
+              </p>
+              <p>
+                If you need help or have any questions please reach out to our amazing
+                staff. You can find them on our Contact Page.
+              </p>
+              <p>- Ben Gallagher, Owner</p>
+              <p>${from}</p>
+            </div>
+       `;  
+
+    }
 };

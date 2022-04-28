@@ -51,6 +51,8 @@ export default function Settings({ currentUser, page }) {
     }
   };
 
+  console.log(currentUser);
+
   return (
     <div style={{ display: page === "settings" ? "" : "none" }}>
       <div className="user-view__form-container">
@@ -77,7 +79,7 @@ export default function Settings({ currentUser, page }) {
           <div className="form__group form__photo-upload">
             <img
               className="form__user-photo"
-              src={`/img/users/${currentUser.photo ?? "default.png"}`}
+              src={`/img/users/${currentUser.photo ?? "default.jpg"}`}
               alt="person"
             ></img>
             <input
